@@ -24,11 +24,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    // "paths": {
-    //   "@assets/*": ["./src/assets/*"],
-    //   "@core/*": ["./src/core/*"],
-    //   "@features/*": ["./src/features/*"]
-    // }
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@features/*": ["./src/features/*"]
+    }
   },
   "include": ["src"]
 }
