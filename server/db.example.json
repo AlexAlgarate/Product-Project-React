@@ -1,0 +1,17 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Update product 1",
+      "price": 10,
+      "userId": 2
+    },
+    {
+      "id": 2,
+      "name": "Mouse",
+      "price": 100,
+      "userId": 2
+    }
+  ],
+  "users": []
+}
