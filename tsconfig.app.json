@@ -26,7 +26,8 @@
 
     "paths": {
       "@assets/*": ["./src/assets/*"],
-      "@features/*": ["./src/features/*"]
+      "@features/*": ["./src/features/*"],
+      "@shared/*": ["./src/shared/*"]
     }
   },
   "include": ["src"]
