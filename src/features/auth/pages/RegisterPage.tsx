@@ -8,3 +8,5 @@ export const RegisterForm: React.FC = () => {
     </Card>
   );
 };
+
+export { RegisterForm as Component };
