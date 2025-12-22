@@ -18,10 +18,11 @@ export const routes: RouteObject[] = [
         loader: (): void => {
           throw redirect('/');
         },
+        id: 'Home',
       },
       {
         path: '/forms',
-        lazy: () => import('@features/auth/pages/RegisterPage'),
+        lazy: () => import('@features/auth/pages/FormsAuthPage'),
         id: 'Formularios',
       },
       {

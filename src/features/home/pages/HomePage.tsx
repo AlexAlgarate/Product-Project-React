@@ -1,7 +1,7 @@
 import { Card } from '@shared/components/card/Card';
 import React from 'react';
 
-export const Component: React.FC = () => {
+export const HomePage: React.FC = () => {
   return (
     <section>
       <h1>Home Page</h1>
@@ -37,3 +37,5 @@ export const Component: React.FC = () => {
     </section>
   );
 };
+
+export { HomePage as Component };
