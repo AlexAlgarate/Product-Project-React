@@ -1,0 +1,47 @@
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.group-control {
+  margin-bottom: 0.5rem;
+}
+
+.group-control-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.success {
+  background: #e6ffed;
+  color: #0b7a3a;
+  border: 1px solid #b7f0c2;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.error {
+  background: #ffecec;
+  color: #8a1f1f;
+  border: 1px solid #f3c2c2;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
