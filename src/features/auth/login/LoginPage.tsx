@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId, useState } from 'react';
-import styles from './registerForm.module.css';
+import styles from '../register/registerForm.module.css';
 
 interface Login {
   email: string;
@@ -21,6 +21,27 @@ export const LoginForm: React.FC = () => {
   const passwordId = useId();
   const rememberMeId = useId();
 
+  const getUserData = async (): Promise<void> => {
+    const token = localStorage.getItem('products-token');
+
+    try {
+      const URL = 'http://localhost:8000';
+      const response = await fetch(`${URL}/auth/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loginUser = async (user: Login): Promise<unknown> => {
     const URL = 'http://localhost:8000/auth/login';
     const response = await fetch(URL, {
@@ -37,7 +58,7 @@ export const LoginForm: React.FC = () => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message, { cause: 'data' });
+      throw new Error(`${response.status} -- ${response.statusText}`);
     }
 
     return data.accessToken;

@@ -22,7 +22,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/forms',
-        lazy: () => import('@features/auth/pages/FormsAuthPage'),
+        lazy: () => import('@features/auth/FormsAuthPage'),
         id: 'Formularios',
       },
       {
