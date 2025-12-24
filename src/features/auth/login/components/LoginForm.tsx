@@ -11,9 +11,13 @@ const INITIAL_STATE: Login = {
   rememberMe: false,
 };
 
+type ButtonState = 'idle' | 'loading' | 'success';
+
 export const LoginForm: React.FC = () => {
   const [userData, setUserData] = useState<Login>(INITIAL_STATE);
-  const { login, isLoading, error, successMessage, clearMessages } = useLogin();
+  const [buttonState, setButtonState] = useState<ButtonState>('idle');
+
+  const { login, error, clearMessages } = useLogin();
 
   const id = useId();
   const ids = {
@@ -33,9 +37,12 @@ export const LoginForm: React.FC = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     clearMessages();
+    setButtonState('loading');
 
     try {
       await login(userData);
+
+      setButtonState('success');
       setUserData(INITIAL_STATE);
 
       setTimeout(() => {
@@ -49,12 +56,6 @@ export const LoginForm: React.FC = () => {
   return (
     <div className={styles.container}>
       <h2>Inicio sesión de usuarios</h2>
-
-      {successMessage && (
-        <div role="status" aria-live="polite" className={styles.success}>
-          {successMessage}
-        </div>
-      )}
 
       {error && (
         <div role="alert" aria-live="assertive" className={styles.error}>
@@ -110,8 +111,20 @@ export const LoginForm: React.FC = () => {
         </div>
 
         <div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Enviando...' : 'Enviar'}
+          <button
+            type="submit"
+            disabled={buttonState === 'loading' || buttonState === 'success'}
+            className={[
+              styles.button,
+              buttonState === 'success' && styles.buttonSuccess,
+              buttonState === 'loading' && styles.buttonLoading,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            {buttonState === 'idle' && 'Enviar'}
+            {buttonState === 'loading' && 'Enviando'}
+            {buttonState === 'success' && 'Has iniciado sesión'}
           </button>
         </div>
       </form>
