@@ -5,8 +5,15 @@ export type Register = {
   isOkConditions: boolean;
 };
 
+export type Login = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
+
 export type ApiResponse<T = unknown> = {
   data?: T;
   message?: string;
+  accessToken?: string;
   [k: string]: unknown;
 };
