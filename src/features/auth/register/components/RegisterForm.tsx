@@ -1,8 +1,8 @@
 import React, { useId, useState, useEffect } from 'react';
-import styles from '../../authForm.module.css';
 import type { ButtonState, Register } from '@features/auth/types';
 import { useRegister } from '../hooks/useRegister';
 import { InlineToast } from '@features/auth/components/InlineToast';
+import styles from '../../authForm.module.css';
 
 export const RegisterForm: React.FC = () => {
   const id = useId();

@@ -1,16 +1,15 @@
 import React, { useId, useState } from 'react';
-import styles from '../../authForm.module.css';
 
 import { useLogin } from '../hooks/useLogin';
 import type { ButtonState, Login } from '@features/auth/types';
 import { Routes } from '@shared/utils/constants';
+import styles from '../../authForm.module.css';
 
 const INITIAL_STATE: Login = {
   email: '',
   password: '',
   rememberMe: false,
 };
-
 
 export const LoginForm: React.FC = () => {
   const [userData, setUserData] = useState<Login>(INITIAL_STATE);
@@ -121,9 +120,13 @@ export const LoginForm: React.FC = () => {
               .filter(Boolean)
               .join(' ')}
           >
-            {buttonState === 'idle' && 'Enviar'}
-            {buttonState === 'loading' && 'Enviando'}
-            {buttonState === 'success' && 'Has iniciado sesión'}
+            {
+              {
+                idle: 'Enviar',
+                loading: 'Enviando',
+                success: 'Has iniciado sesión',
+              }[buttonState]
+            }
           </button>
         </div>
       </form>
