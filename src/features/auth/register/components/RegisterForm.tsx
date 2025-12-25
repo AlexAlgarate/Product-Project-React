@@ -76,9 +76,7 @@ export const RegisterForm: React.FC = () => {
         />
       )}
 
-      {error && (
-        <InlineToast message={error} type="error" visible={buttonState === 'success'} />
-      )}
+      {error && <InlineToast message={error} type="error" visible={true} />}
 
       <form onSubmit={handleSubmit}>
         <div className="group-control">
@@ -148,9 +146,13 @@ export const RegisterForm: React.FC = () => {
               .filter(Boolean)
               .join(' ')}
           >
-            {buttonState === 'idle' && 'Crear usuario'}
-            {buttonState === 'loading' && 'Creando usuario…'}
-            {buttonState === 'success' && 'Usuario creado'}
+            {
+              {
+                idle: 'Crear usuario',
+                loading: 'Creando usuario…',
+                success: 'Usuario creado',
+              }[buttonState]
+            }
           </button>
         </div>
       </form>
