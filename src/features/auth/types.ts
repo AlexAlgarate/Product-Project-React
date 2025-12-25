@@ -17,3 +17,5 @@ export type ApiResponse<T = unknown> = {
   accessToken?: string;
   [k: string]: unknown;
 };
+
+export type ButtonState = 'idle' | 'loading' | 'success';

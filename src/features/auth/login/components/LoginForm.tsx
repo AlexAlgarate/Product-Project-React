@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import styles from '../../authForm.module.css';
 
 import { useLogin } from '../hooks/useLogin';
-import type { Login } from '@features/auth/types';
+import type { ButtonState, Login } from '@features/auth/types';
 import { Routes } from '@shared/utils/constants';
 
 const INITIAL_STATE: Login = {
@@ -11,7 +11,6 @@ const INITIAL_STATE: Login = {
   rememberMe: false,
 };
 
-type ButtonState = 'idle' | 'loading' | 'success';
 
 export const LoginForm: React.FC = () => {
   const [userData, setUserData] = useState<Login>(INITIAL_STATE);
