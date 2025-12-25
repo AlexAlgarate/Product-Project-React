@@ -48,6 +48,7 @@ export const RegisterForm: React.FC = () => {
 
       setTimeout(() => {
         setButtonState('idle');
+        clearMessages();
       }, 3000);
     } catch {
       setButtonState('idle');
@@ -59,10 +60,16 @@ export const RegisterForm: React.FC = () => {
       <h2>Registro de usuarios</h2>
 
       {successMessage && (
-        <InlineToast message={successMessage} type="success" onClose={clearMessages} />
+        <InlineToast
+          message={successMessage}
+          type="success"
+          visible={buttonState === 'success'}
+        />
       )}
 
-      {error && <InlineToast message={error} type="error" onClose={clearMessages} />}
+      {error && (
+        <InlineToast message={error} type="error" visible={buttonState === 'success'} />
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="group-control">

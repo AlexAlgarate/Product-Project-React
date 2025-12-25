@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from '../authForm.module.css';
 
 export type InlineToastType = 'success' | 'error';
@@ -6,34 +6,21 @@ export type InlineToastType = 'success' | 'error';
 interface InlineToastProps {
   readonly message: string;
   readonly type?: InlineToastType;
-  readonly duration?: number;
-  readonly onClose?: () => void;
+  readonly visible: boolean;
 }
 
 export const InlineToast: React.FC<InlineToastProps> = ({
   message,
   type = 'success',
-  duration = 3000,
-  onClose,
+  visible,
 }) => {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-
-    const timer = setTimeout(() => {
-      setVisible(false);
-      setTimeout(() => onClose?.(), 300);
-    }, duration);
-
-    return (): void => clearTimeout(timer);
-  }, [duration, onClose]);
+  if (!visible) return null;
 
   return (
     <div
       role="status"
       aria-live="polite"
-      className={[styles.toast, styles[`toast-${type}`], visible && styles.toastShow]
+      className={[styles.toast, styles[`toast-${type}`], styles.toastShow]
         .filter(Boolean)
         .join(' ')}
     >
