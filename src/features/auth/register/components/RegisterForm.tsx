@@ -1,11 +1,14 @@
-import React, { useId } from 'react';
-import styles from '../../authForm.module.css'
-import type { Register } from '@features/auth/types';
+import React, { useId, useState } from 'react';
+import styles from '../../authForm.module.css';
+import type { ButtonState, Register } from '@features/auth/types';
 import { useRegister } from '../hooks/useRegister';
+import { InlineToast } from '@features/auth/components/InlineToast';
 
 export const RegisterForm: React.FC = () => {
   const id = useId();
-  const { register, isLoading, error, successMessage, clearMessages } = useRegister();
+  const [buttonState, setButtonState] = useState<ButtonState>('idle');
+
+  const { register, error, successMessage, clearMessages } = useRegister();
 
   const ids = {
     firstName: `${id}-firstName`,
@@ -17,6 +20,8 @@ export const RegisterForm: React.FC = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     clearMessages();
+
+    setButtonState('loading');
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -32,15 +37,20 @@ export const RegisterForm: React.FC = () => {
 
     try {
       await register(payload);
-      // reset the form so fields are cleared after success
+
       form.reset();
-      // optionally focus the first input
+      setButtonState('success');
+
       const firstInput = form.querySelector<HTMLInputElement>(
         'input[name="firstName"]'
       );
       firstInput?.focus();
+
+      setTimeout(() => {
+        setButtonState('idle');
+      }, 3000);
     } catch {
-      // el hook ya coloca el error; aquí no necesitamos hacer nada adicional
+      setButtonState('idle');
     }
   };
 
@@ -49,18 +59,12 @@ export const RegisterForm: React.FC = () => {
       <h2>Registro de usuarios</h2>
 
       {successMessage && (
-        <div role="status" aria-live="polite" className={styles.success}>
-          {successMessage}
-        </div>
+        <InlineToast message={successMessage} type="success" onClose={clearMessages} />
       )}
 
-      {error && (
-        <div role="alert" aria-live="assertive" className={styles.error}>
-          {error}
-        </div>
-      )}
+      {error && <InlineToast message={error} type="error" onClose={clearMessages} />}
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         <div className="group-control">
           <label htmlFor={ids.firstName} className={styles.label}>
             Nombre
@@ -72,7 +76,6 @@ export const RegisterForm: React.FC = () => {
             name="firstName"
             id={ids.firstName}
             className={styles.input}
-            autoComplete="given-name"
           />
         </div>
 
@@ -99,6 +102,7 @@ export const RegisterForm: React.FC = () => {
             type="password"
             placeholder="Dime tu password"
             required
+            minLength={8}
             name="password"
             id={ids.password}
             className={styles.input}
@@ -117,8 +121,20 @@ export const RegisterForm: React.FC = () => {
         </div>
 
         <div>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Enviando...' : 'Enviar'}
+          <button
+            type="submit"
+            disabled={buttonState === 'loading'}
+            className={[
+              styles.button,
+              buttonState === 'loading' && styles.buttonLoading,
+              buttonState === 'success' && styles.buttonSuccess,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
+            {buttonState === 'idle' && 'Crear usuario'}
+            {buttonState === 'loading' && 'Creando usuario…'}
+            {buttonState === 'success' && 'Usuario creado'}
           </button>
         </div>
       </form>
