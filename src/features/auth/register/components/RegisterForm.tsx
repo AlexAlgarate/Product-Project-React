@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useId, useState, useEffect } from 'react';
 import styles from '../../authForm.module.css';
 import type { ButtonState, Register } from '@features/auth/types';
 import { useRegister } from '../hooks/useRegister';
@@ -17,16 +17,20 @@ export const RegisterForm: React.FC = () => {
     isOkConditions: `${id}-isOkConditions`,
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-    clearMessages();
+  useEffect(() => {
+    if (buttonState !== 'success') return;
 
-    setButtonState('loading');
+    const timer = setTimeout(() => {
+      setButtonState('idle');
+      clearMessages();
+    }, 3000);
+    return (): void => clearInterval(timer);
+  }, [buttonState, clearMessages]);
 
-    const form = event.currentTarget;
+  const buildRegisterPayload = (form: HTMLFormElement): Register => {
     const formData = new FormData(form);
 
-    const payload: Register = {
+    return {
       firstName: (formData.get('firstName') as string) || '',
       email: (formData.get('email') as string) || '',
       password: (formData.get('password') as string) || '',
@@ -34,6 +38,16 @@ export const RegisterForm: React.FC = () => {
         formData.get('isOkConditions') === 'on' ||
         formData.get('isOkConditions') === 'true',
     };
+  };
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    clearMessages();
+
+    setButtonState('loading');
+
+    const form = event.currentTarget;
+    const payload = buildRegisterPayload(form);
 
     try {
       await register(payload);
@@ -45,11 +59,6 @@ export const RegisterForm: React.FC = () => {
         'input[name="firstName"]'
       );
       firstInput?.focus();
-
-      setTimeout(() => {
-        setButtonState('idle');
-        clearMessages();
-      }, 3000);
     } catch {
       setButtonState('idle');
     }
