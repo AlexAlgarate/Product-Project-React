@@ -21,13 +21,7 @@ export const routes: RouteObject[] = [
         lazy: () => import('@features/home/pages/HomePage'),
         id: 'Inicio',
       },
-      {
-        path: '/home',
-        loader: (): void => {
-          throw redirect('/');
-        },
-        id: 'Home',
-      },
+      
       {
         path: '/login',
         lazy: () => import('@features/auth/pages/LoginPage'),
@@ -36,16 +30,9 @@ export const routes: RouteObject[] = [
       {
         path: '/register',
         lazy: () => import('@features/auth/pages/RegisterPage'),
-        id: 'Registro',
+        // id: 'Registro',
       },
-      {
-        // Ruta legacy - redirige a login
-        path: '/forms',
-        loader: (): void => {
-          throw redirect('/login');
-        },
-        id: 'Forms',
-      },
+      
       {
         loader: protectedRoute,
         path: '/products',

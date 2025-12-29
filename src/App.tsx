@@ -8,9 +8,10 @@ import './App.css';
 
 export const App: React.FC = () => {
   const appTitle = 'Products Project';
+  const menuOptions = getMenuOptions();
 
   return (
-    <Layout appTitle={appTitle} menuOptions={getMenuOptions()}>
+    <Layout appTitle={appTitle} menuOptions={menuOptions}>
       <Outlet />
     </Layout>
   );

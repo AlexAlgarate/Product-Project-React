@@ -17,10 +17,14 @@ export const getMenuOptionsFromRoutes = (): MenuOption[] =>
  * Returns all menu options for the application
  * Includes options extracted from routes + additional options
  */
-export const getMenuOptions = (): MenuOption[] => {
+export const getMenuOptions = (
+  additionalOptions: MenuOption[] | null = null
+): MenuOption[] => {
   const routeOptions = getMenuOptionsFromRoutes();
 
   // Opciones adicionales que no están en routes.tsx (next features?)
-  const additionalOptions: MenuOption[] = [{ path: '/about', label: 'Acerca de' }];
-  return [...routeOptions, ...additionalOptions];
+  if (additionalOptions) {
+    return [...routeOptions, ...additionalOptions];
+  }
+  return [...routeOptions];
 };
