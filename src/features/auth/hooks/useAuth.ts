@@ -7,6 +7,7 @@ export type UseAuthReturn = {
   isLoading: boolean;
   error: string | null;
   successMessage: string | null;
+
   login: (payload: Login) => Promise<string>;
   register: (payload: Register) => Promise<void>;
   clearMessages: () => void;
@@ -29,12 +30,15 @@ export function useAuth(): UseAuthReturn {
 
     try {
       const token = await loginUser(payload);
-      localStorage.setItem(constants.tokenKey, token);
+
+      const storage = payload.rememberMe ? localStorage : sessionStorage;
+      storage.setItem(constants.tokenKey, token);
+
       return token;
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error al iniciar sesión';
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Error al iniciar sesión';
       setError(message);
-      throw err;
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -48,10 +52,10 @@ export function useAuth(): UseAuthReturn {
     try {
       const response = await registerUser(payload);
       setSuccessMessage(response?.message || 'Usuario registrado correctamente');
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Error al registrar usuario';
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Error al registrar usuario';
       setError(message);
-      throw err;
+      throw error;
     } finally {
       setIsLoading(false);
     }
