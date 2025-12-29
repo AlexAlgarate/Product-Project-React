@@ -14,7 +14,7 @@ export const loginUser = async (payload: Login): Promise<string> => {
   });
 
   if (!response.ok) {
-    throw new Error(`${response.status} -- ${response.statusText}`);
+    throw new Error(`Error iniciando sesión: ${response.status} -- ${response.statusText}`);
   }
 
   const data = await response.json();
