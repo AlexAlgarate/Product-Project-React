@@ -18,4 +18,4 @@ export type ApiResponse<T = unknown> = {
   [k: string]: unknown;
 };
 
-export type ButtonState = 'idle' | 'loading' | 'success';
+export type ButtonState = 'idle' | 'loading' | 'success' | 'error';
