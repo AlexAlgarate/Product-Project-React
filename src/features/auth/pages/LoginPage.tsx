@@ -1,5 +1,5 @@
-import React, { useState, useId } from 'react';
-import { Link } from 'react-router';
+import React, { useState, useId, useRef, useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router';
 
 import type { Login, ButtonState } from '../types';
 import { useAuth } from '../hooks/useAuth';
@@ -22,35 +22,54 @@ export const LoginPage: React.FC = () => {
   const [buttonState, setButtonState] = useState<ButtonState>('idle');
 
   const { login, error, clearMessages } = useAuth();
+
   const id = useId();
+  const navigate = useNavigate();
+  const redirectTimeoutRef = useRef<number | null>(null);
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { name, type, value, checked } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    (event) => {
+      const { name, type, value, checked } = event.target;
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
-    event.preventDefault();
-    clearMessages();
-    setButtonState('loading');
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value,
+      }));
+    },
+    []
+  );
 
-    try {
-      await login(formData);
-      setButtonState('success');
-      setFormData(initialState);
+  useEffect(() => {
+    return (): void => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    async (event) => {
+      event.preventDefault();
+      clearMessages();
+      setButtonState('loading');
 
-      // Redirigir después de login exitoso
-      setTimeout(() => {
-        window.location.href = Routes.products;
-      }, 1000);
-    } catch {
-      setButtonState('error');
-      setTimeout(() => setButtonState('idle'), 2000);
-    }
-  };
+      try {
+        await login(formData);
+
+        setButtonState('success');
+        setFormData(initialState);
+
+        redirectTimeoutRef.current = window.setTimeout(() => {
+          navigate(Routes.products);
+        }, 1000);
+      } catch {
+        setButtonState('error');
+        redirectTimeoutRef.current = window.setTimeout(() => {
+          setButtonState('idle');
+        }, 1500);
+      }
+    },
+    [clearMessages, login, formData, navigate]
+  );
 
   const footer = (
     <div className={styles.authFooter}>
