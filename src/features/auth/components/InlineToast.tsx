@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../authForm.module.css';
+import styles from '../styles/authForm.module.css';
 
 export type InlineToastType = 'success' | 'error';
 
