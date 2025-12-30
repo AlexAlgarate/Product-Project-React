@@ -34,6 +34,8 @@ export function useAuth(): UseAuthReturn {
       const storage = payload.rememberMe ? localStorage : sessionStorage;
       storage.setItem(constants.tokenKey, token);
 
+      window.dispatchEvent(new Event(constants.storageChange));
+
       return token;
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Error al iniciar sesión';
