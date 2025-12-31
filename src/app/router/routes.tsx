@@ -1,7 +1,7 @@
 import { redirect, type RouteObject } from 'react-router';
 import { Card } from '@shared/components/card/Card';
 import { App } from '../../App';
-import { constants } from '@shared/utils/constants';
+import { constants, labelNavbarOptions } from '@shared/utils/constants';
 
 const protectedRoute = (): void => {
   const token =
@@ -16,7 +16,7 @@ type RouteType = RouteObject;
 const login: RouteType = {
   path: '/login',
   lazy: () => import('@features/auth/pages/LoginPage'),
-  id: 'Iniciar sesión',
+  id: labelNavbarOptions.login,
 };
 
 const register: RouteType = {
@@ -28,14 +28,14 @@ const home: RouteType = {
   index: true,
   path: '',
   lazy: () => import('@features/home/pages/HomePage'),
-  id: 'Inicio',
+  id: labelNavbarOptions.home,
 };
 
 const products: RouteType = {
   loader: protectedRoute,
   path: '/products',
   lazy: () => import('@features/products/pages/ProductsPage'),
-  id: 'Products',
+  id: labelNavbarOptions.products,
 };
 
 const pageNotFound: RouteType = {

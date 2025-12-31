@@ -8,3 +8,9 @@ export const constants = {
 export const Routes = {
   products: '/products',
 };
+
+export const labelNavbarOptions = {
+  login: 'Iniciar sesión',
+  home: 'Inicio',
+  products: 'Productos'
+}
