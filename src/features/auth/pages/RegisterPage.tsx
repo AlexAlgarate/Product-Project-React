@@ -89,7 +89,7 @@ export const RegisterPage: React.FC = () => {
 
       {error && <InlineToast message={error} type="error" visible={true} />}
 
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         <FormField
           id={`${id}-firstName`}
           ref={firstInputRef}
