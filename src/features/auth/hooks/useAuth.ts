@@ -57,7 +57,6 @@ export function useAuth(): UseAuthReturn {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Error al registrar usuario';
       setError(message);
-      throw error;
     } finally {
       setIsLoading(false);
     }

@@ -14,6 +14,7 @@ export type FormFieldProps = {
   checked?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   error?: string;
+  ref?: React.Ref<HTMLInputElement>;
 };
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -29,6 +30,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   checked,
   onChange,
   error,
+  ref,
 }) => {
   const isCheckbox = type === 'checkbox';
 
@@ -42,6 +44,7 @@ export const FormField: React.FC<FormFieldProps> = ({
           checked={checked}
           onChange={onChange}
           required={required}
+          ref={ref}
         />
         <label htmlFor={id}>{label}</label>
         {error && <span className={styles.fieldError}>{error}</span>}
@@ -68,6 +71,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         className={`${styles.input} ${error ? styles.inputError : ''}`}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? `${id}-error` : undefined}
+        ref={ref}
       />
       {error && (
         <span id={`${id}-error`} className={styles.fieldError} role="alert">

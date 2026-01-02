@@ -1,4 +1,4 @@
-import React, { useState, useId, useEffect } from 'react';
+import React, { useState, useId, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 
 import type { Register, ButtonState } from '../types';
@@ -20,6 +20,7 @@ const INITIAL_STATE: Register = {
 export const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState<Register>(INITIAL_STATE);
   const [buttonState, setButtonState] = useState<ButtonState>('idle');
+  const firstInputRef = useRef<HTMLInputElement>(null);
 
   const { register, error, successMessage, clearMessages } = useAuth();
   const id = useId();
@@ -36,16 +37,16 @@ export const RegisterPage: React.FC = () => {
     return (): void => clearTimeout(timer);
   }, [buttonState, clearMessages]);
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, type, value, checked } = e.target;
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { name, type, value, checked } = event.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
     clearMessages();
     setButtonState('loading');
 
@@ -53,13 +54,9 @@ export const RegisterPage: React.FC = () => {
       await register(formData);
       setButtonState('success');
       setFormData(INITIAL_STATE);
-
-      // Focus en el primer campo
-      const firstInput = e.currentTarget.querySelector<HTMLInputElement>(
-        'input[name="firstName"]'
-      );
-      firstInput?.focus();
-    } catch {
+      firstInputRef.current?.focus();
+    } catch (error) {
+      console.error('Error en catch:', error);
       setButtonState('error');
       setTimeout(() => setButtonState('idle'), 2000);
     }
@@ -95,6 +92,7 @@ export const RegisterPage: React.FC = () => {
       <form onSubmit={handleSubmit} noValidate>
         <FormField
           id={`${id}-firstName`}
+          ref={firstInputRef}
           name="firstName"
           label="Nombre"
           type="text"
