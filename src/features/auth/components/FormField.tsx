@@ -24,7 +24,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   type,
   placeholder,
   required,
-  minLength = 8,
+  minLength,
   autoComplete,
   value,
   checked,
@@ -64,7 +64,7 @@ export const FormField: React.FC<FormFieldProps> = ({
         name={name}
         placeholder={placeholder}
         required={required}
-        minLength={minLength}
+        minLength={type === 'password' ? 8 : minLength}
         autoComplete={autoComplete}
         value={value}
         onChange={onChange}
