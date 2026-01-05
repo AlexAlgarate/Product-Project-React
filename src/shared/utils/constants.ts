@@ -7,10 +7,15 @@ export const constants = {
 
 export const Routes = {
   products: '/products',
+  login: '/login',
+  register: '/register',
+  home: '/',
 };
 
 export const labelNavbarOptions = {
   login: 'Iniciar sesión',
   home: 'Inicio',
-  products: 'Productos'
-}
+  products: 'Productos',
+};
+
+export const redirectTimeout = 3000;
