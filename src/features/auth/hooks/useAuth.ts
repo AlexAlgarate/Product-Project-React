@@ -9,7 +9,7 @@ export type UseAuthReturn = {
   successMessage: string | null;
 
   login: (payload: Login) => Promise<string>;
-  register: (payload: Register) => Promise<void>;
+  register: (payload: Register) => Promise<string>;
   clearMessages: () => void;
 };
 
@@ -38,7 +38,8 @@ export function useAuth(): UseAuthReturn {
 
       return token;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Error al iniciar sesión';
+      const message =
+        error instanceof Error ? error.message : 'Error al iniciar sesión';
       setError(message);
       throw error;
     } finally {
@@ -46,7 +47,7 @@ export function useAuth(): UseAuthReturn {
     }
   }, []);
 
-  const register = useCallback(async (payload: Register): Promise<void> => {
+  const register = useCallback(async (payload: Register): Promise<string> => {
     setIsLoading(true);
     setError(null);
     setSuccessMessage(null);
@@ -54,13 +55,24 @@ export function useAuth(): UseAuthReturn {
     try {
       const response = await registerUser(payload);
       setSuccessMessage(response?.message || 'Usuario registrado correctamente');
+
+      const token = await login({
+        email: payload.email,
+        password: payload.password,
+        rememberMe: false,
+      });
+
+      return token
+
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Error al registrar usuario';
+      const message =
+        error instanceof Error ? error.message : 'Error al registrar usuario';
       setError(message);
+      throw error;
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [login]);
 
   return {
     isLoading,

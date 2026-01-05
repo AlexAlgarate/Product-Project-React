@@ -1,5 +1,5 @@
 import React, { useState, useId, useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import type { Register, ButtonState } from '../types';
 import { InlineToast } from '../components/InlineToast';
@@ -9,6 +9,7 @@ import { FormField } from '../components/FormField';
 import { SubmitButton } from '../components/SubmitButton';
 
 import styles from '../styles/authForm.module.css';
+import { redirectTimeout, Routes } from '@shared/utils/constants';
 
 const INITIAL_STATE: Register = {
   firstName: '',
@@ -24,6 +25,9 @@ export const RegisterPage: React.FC = () => {
 
   const { register, error, successMessage, clearMessages } = useAuth();
   const id = useId();
+
+  const navigate = useNavigate();
+  const redirectTimeoutRef = useRef<number | null>(null);
 
   // Auto-clear success state
   useEffect(() => {
@@ -44,6 +48,14 @@ export const RegisterPage: React.FC = () => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+  
+  useEffect(() => {
+    return (): void => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -52,9 +64,14 @@ export const RegisterPage: React.FC = () => {
 
     try {
       await register(formData);
+
       setButtonState('success');
       setFormData(INITIAL_STATE);
       firstInputRef.current?.focus();
+
+      redirectTimeoutRef.current = window.setTimeout(() => {
+        navigate(Routes.products);
+      }, redirectTimeout);
     } catch (error) {
       console.error('Error en catch:', error);
       setButtonState('error');
