@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { Login, Register } from '../types';
+import type { Login, Register } from '../types/types';
 import { loginUser, registerUser } from '../api/authApi';
 import { constants } from '@shared/utils/constants';
 

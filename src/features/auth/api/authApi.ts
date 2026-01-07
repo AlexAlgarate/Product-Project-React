@@ -1,4 +1,4 @@
-import type { ApiResponse, Login, Register } from '../types';
+import type { ApiResponse, Login, Register } from '../types/types';
 import { constants } from '@shared/utils/constants';
 
 const BASE_URL = import.meta.env.VITE_AUTH_URL || 'http://localhost:8000';

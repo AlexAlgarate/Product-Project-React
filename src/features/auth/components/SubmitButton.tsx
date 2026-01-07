@@ -1,7 +1,7 @@
 // src/features/auth/components/SubmitButton.tsx
 
 import React from 'react';
-import type { ButtonState } from '../types';
+import type { ButtonState } from '../types/types';
 import styles from '../styles/authForm.module.css';
 
 type SubmitButtonProps = {
