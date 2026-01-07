@@ -1,6 +1,5 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-import styles from './card.module.css'
 
 type Props = {
   readonly children: ReactNode;
@@ -10,7 +9,10 @@ type Props = {
 
 export const Card: React.FC<Props> = ({ children, title, style }) => {
   return (
-    <div style={style} className={styles.card}>
+    <div
+      style={style}
+      className="p-4 border border-solid border-gray-card rounded-lg shadow-xl"
+    >
       {title && <h3>{title}</h3>}
       {children}
     </div>
