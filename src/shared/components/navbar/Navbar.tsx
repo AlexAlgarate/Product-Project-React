@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router';
 import { useAuthToken } from '@features/auth/hooks/useAuthToken';
 
-import { labelNavbarOptions } from '@shared/utils/constants';
+import { labelNavbarOptions, Routes } from '@shared/utils/constants';
 
 import styles from './navbar.module.css';
 
@@ -24,7 +24,7 @@ export const Navbar: React.FC<Props> = ({ options }) => {
       event.preventDefault();
 
       logout();
-      navigate('/');
+      navigate(Routes.home);
     },
     [logout, navigate]
   );
@@ -36,7 +36,7 @@ export const Navbar: React.FC<Props> = ({ options }) => {
           // Si hay token y es el enlace de "Iniciar sesión", reemplazarlo con "Cerrar Sesión"
           if (item.label === labelNavbarOptions.login && hasToken) {
             return (
-              <li key={item.path} className={styles.item}>
+              <li key={item.label} className={styles.item}>
                 <button
                   onClick={handleLogout}
                   className={`${styles.link} ${styles.logoutButton}`}
@@ -49,7 +49,7 @@ export const Navbar: React.FC<Props> = ({ options }) => {
 
           // Si no hay token, mostrar todos los items normalmente
           return (
-            <li key={item.path} className={styles.item}>
+            <li key={item.label} className={styles.item}>
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
