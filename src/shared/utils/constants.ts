@@ -10,6 +10,7 @@ export const Routes = {
   login: '/login',
   register: '/register',
   home: '/',
+  productDetail: '/products/:id',
 };
 
 export const labelNavbarOptions = {

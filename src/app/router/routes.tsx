@@ -40,15 +40,21 @@ const products: RouteObject = {
   id: labelNavbarOptions.products,
 };
 
+const productsDetail: RouteObject = {
+  loader: protectedRoute,
+  path: Routes.productDetail,
+  lazy: () => import('@features/products/pages/ProductsPage'),
+};
+
 const pageNotFound: RouteObject = {
   path: '*',
-  Component:  NotFoundPage ,
+  Component: NotFoundPage,
 };
 
 export const routes: RouteObject[] = [
   {
     path: Routes.home,
     Component: App,
-    children: [home, products, login, register, pageNotFound],
+    children: [home, products, login, register, productsDetail, pageNotFound],
   },
 ];
