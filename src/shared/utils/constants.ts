@@ -3,6 +3,7 @@ export const constants = {
   tokenKey: 'products-token',
   storage: 'storage',
   storageChange: 'storage-change',
+  imagePlaceholder: 'https://demofree.sirv.com/nope-not-here.jpg',
 };
 
 export const Routes = {
