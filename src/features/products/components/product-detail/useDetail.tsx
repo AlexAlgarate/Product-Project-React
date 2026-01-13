@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 type ProductDetail = {
   product: Product | null;
-  setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 };
 
 export const useDetail = (id: Product['id']): ProductDetail => {
@@ -26,5 +25,5 @@ export const useDetail = (id: Product['id']): ProductDetail => {
     load();
   }, [id]);
 
-  return { product, setProduct };
+  return { product };
 };

@@ -2,7 +2,7 @@ import type { Product } from '@features/products/types/Product';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { useDetail } from './useDetail';
-import { Routes } from '@shared/utils/constants';
+import { constants, Routes } from '@shared/utils/constants';
 import { Card } from '@shared/components/card/Card';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 
@@ -13,7 +13,7 @@ type ProductsDetailProps = {
 export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
   const navigate = useNavigate();
 
-  const { product, setProduct } = useDetail(id);
+  const { product } = useDetail(id);
 
   const handleBack = (): void => {
     navigate(Routes.products);
@@ -28,28 +28,26 @@ export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
       <h1>Products Detail Page</h1>
       <Card>
         {product ? (
-          <article>
+          <div className="flex flex-col gap-6">
             <p>ID: {product.id}</p>
             <p>Nombre: {product.name}</p>
-            <p>Price: {product.price}</p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <p>Price: {product.price} €</p>
+            <p>Tags: {product.tags.join(', ')}</p>
+            <div className="flex gap-4">
               <span>Is on Sale</span>
 
               <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={product.isOnSale}
-                  onChange={(e) =>
-                    setProduct((prev) =>
-                      prev ? { ...prev, isOnSale: e.target.checked } : prev
-                    )
-                  }
-                />
+                <input type="checkbox" readOnly checked={product.isOnSale} />
                 <span className="slider" />
               </label>
             </div>
             <p>Descripción: {product.description}</p>
-          </article>
+            <img
+              src={product.image ? product.image : constants.imagePlaceholder}
+              alt="imagen del anuncio"
+              className="h-52 w-52 object-cover rounded-lg"
+            />
+          </div>
         ) : (
           <NotFoundPage />
         )}
