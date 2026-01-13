@@ -1,5 +1,6 @@
 import type { Product } from '@features/products/types/Product';
 import { Card } from '@shared/components/card/Card';
+import { constants } from '@shared/utils/constants';
 import React from 'react';
 import { useNavigate } from 'react-router';
 
@@ -36,19 +37,23 @@ export const ProductItem: React.FC<ProductItemProp> = ({
         <p>
           {product.id} - {product.name}
         </p>
-        <p>Price: {product.price}</p>
-        <p>Is On Sale - {product.isOnSale.toString()}</p>
-        <p>Is On Sale - {product.isOnSale ? 'Yes' : 'No'}</p>
-        <label className="inline-flex items-center cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer" />
-          <div className="relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-0.5 after:start-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
-          <span className="select-none ms-3 text-sm font-medium text-heading">
-            Is on Sale?
-          </span>
-        </label>
+        <p>Price: {product.price} €</p>
+        <p>Tags: {product.tags.join(', ')}</p>
+
+        <textarea
+          name="description"
+          id="description"
+          className="resize-none border rounded-md"
+          value={product.description ?? ''}
+          readOnly
+          disabled
+          rows={4}
+        >
+          {product.description}
+        </textarea>
 
         <label className="inline-flex items-center cursor-default gap-6">
-          <span className="select-none ms-3 text-md font-medium text-heading">
+          <span className="select-none text-md font-medium text-heading">
             Is on Sale?
           </span>
           <input
@@ -67,6 +72,11 @@ export const ProductItem: React.FC<ProductItemProp> = ({
     peer-checked:after:translate-x-full"
           />
         </label>
+        <img
+          src={product.image ? product.image : constants.imagePlaceholder}
+          alt="imagen del anuncio"
+          className="h-52 w-52 object-cover rounded-lg"
+        />
       </div>
       <div className="flex gap-6 m-4">
         <button onClick={handleEdit}>Editar</button>
