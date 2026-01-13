@@ -1,10 +1,14 @@
 import React from 'react';
+import { useParams } from 'react-router';
+import { ProductsList } from '../components/products-list/ProductsList';
+import { ProductsDetail } from '../components/product-detail/ProductsDetail';
 
 export const ProductsPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+
   return (
     <section>
-      <h1>Products Page</h1>
-      <p>Página de productos</p>
+      {id ? <ProductsDetail id={parseInt(id)} /> : <ProductsList />}
     </section>
   );
 };
