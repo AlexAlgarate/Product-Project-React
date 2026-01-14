@@ -63,6 +63,38 @@ const LabelInput: React.FC<LabelProps> = ({
     </label>
   );
 };
+
+type IsOnSaleSwitchProps = {
+  isOnSale: boolean;
+  onChange: (checked: boolean) => void;
+};
+
+const IsOnSaleSwitch: React.FC<IsOnSaleSwitchProps> = ({ isOnSale, onChange }) => {
+  return (
+    <label className="inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        checked={isOnSale}
+        onChange={(e) => onChange(e.target.checked)}
+        className="sr-only peer"
+      />
+
+      <div
+        className="relative w-9 h-5 bg-blue-300 rounded-full
+         peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft
+         peer-checked:bg-brand
+         after:content-[''] after:absolute after:top-0.5 after:start-0.5
+         after:bg-amber-300 after:rounded-full after:h-4 after:w-4 after:transition-all
+         peer-checked:after:translate-x-full"
+      />
+
+      <span className="select-none ms-3 text-sm font-medium text-heading">
+        Is on Sale
+      </span>
+    </label>
+  );
+};
+
 export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
   const isEditing = Boolean(item);
 
@@ -84,6 +116,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
       ...product,
       [name]: value,
     });
+  };
+
+  const handleIsOnSaleChange = (checked: boolean): void => {
+    setProduct((prev) => ({
+      ...prev,
+      isOnSale: checked,
+    }));
   };
 
   return (
@@ -126,6 +165,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
             valueInput={product.image}
             onChange={handleChange}
           />
+          <IsOnSaleSwitch isOnSale={product.isOnSale} onChange={handleIsOnSaleChange} />
           <LabelInput
             htmlFor="description"
             spanText="Description:"
