@@ -11,13 +11,21 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', className, children, ...rest }, ref) => {
-    const base =
-      'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+    const base = `
+      appearance-none leading-normal
+      inline-flex items-center
+      justify-center rounded-lg
+      font-medium transition-colors
+      border-0 cursor-pointer
+      focus:outline-none focus-visible:ring-2
+      focus-visible:ring-offset-2 
+      disabled:opacity-50 disabled:cursor-not-allowed
+    `;
 
     const variantClasses: Record<ButtonVariant, string> = {
       primary:
         'bg-indigo-600 text-white hover:bg-indigo-700 focus-visible:ring-indigo-500',
-      danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500',
+      danger: 'bg-red-600/50 text-white hover:bg-red-700 focus-visible:ring-red-500',
       secondary: 'bg-gray-800 text-white hover:bg-gray-700 focus-visible:ring-gray-500',
       ghost: 'bg-transparent text-white/95 hover:bg-white/10 focus-visible:ring-white',
     };

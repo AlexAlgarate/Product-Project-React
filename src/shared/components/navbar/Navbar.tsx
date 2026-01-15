@@ -6,6 +6,7 @@ import { labelNavbarOptions, Routes } from '@shared/utils/constants';
 import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
 
 import { cn } from '@shared/utils/cn';
+import { Button } from '../ui';
 
 export type MenuOption = {
   path: string;
@@ -45,19 +46,13 @@ export const Navbar: React.FC<NavBarProps> = ({ options }) => {
           if (item.label === labelNavbarOptions.login && hasToken) {
             return (
               <li key={item.label} className="flex items-center">
-                <button
+                <Button
+                  variant="ghost"
+                  size="lg"
                   onClick={() => setShowLogoutConfirm(true)}
-                  className={cn(
-                    'py-2 px-4 rounded-lg text-md font-medium',
-                    'leading-none appearance-none',
-                    'text-red-500 bg-transparent border-0 cursor-pointer',
-                    'transition-all duration-300 ease-in-out',
-                    'hover:text-white hover:bg-red-500/15',
-                    'active:bg-red-500/25'
-                  )}
                 >
                   Cerrar Sesión
-                </button>
+                </Button>
               </li>
             );
           }
@@ -69,7 +64,7 @@ export const Navbar: React.FC<NavBarProps> = ({ options }) => {
                 to={item.path}
                 className={({ isActive }) =>
                   cn(
-                    'px-4 py-2 rounded-lg text-md font-medium',
+                    'px-4 py-2 rounded-lg text-base font-medium',
                     'text-[#a0a0a0]',
                     'transition-all duration-300 ease-in-out',
                     'hover:text-white hover:bg-white/5',
