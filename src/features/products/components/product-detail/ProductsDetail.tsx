@@ -1,10 +1,13 @@
 import type { Product } from '@features/products/types/Product';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useDetail } from './useDetail';
 import { constants, Routes } from '@shared/utils/constants';
 import { Card } from '@shared/components/card/Card';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
+import { Button } from '@shared/components/ui';
+import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
+import { useProducts } from '../products-list/useProducts';
 
 type ProductsDetailProps = {
   readonly id: Product['id'];
@@ -12,6 +15,8 @@ type ProductsDetailProps = {
 
 export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
   const navigate = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const { deleteProduct } = useProducts();
 
   const { product } = useDetail(id);
 
@@ -19,14 +24,32 @@ export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
     navigate(Routes.products);
   };
 
+  const handleConfirmRemoveProduct = useCallback(() => {
+    if (!product) return;
+
+    deleteProduct(product as Product);
+
+    navigate(Routes.products);
+  }, [deleteProduct, navigate, product]);
+
   if (!product) {
     return <NotFoundPage />;
   }
 
   return (
     <article>
+      {showLogoutConfirm && (
+        <ConfirmModal
+          message="¿Estás seguro de que deseas borrar el producto?"
+          onCancel={() => setShowLogoutConfirm(false)}
+          onConfirm={() => {
+            setShowLogoutConfirm(false);
+            handleConfirmRemoveProduct();
+          }}
+        />
+      )}
       <h1>Products Detail Page</h1>
-      <Card>
+      <Card className="flex flex-col gap-6 max-w-md">
         {product ? (
           <div className="flex flex-col gap-6">
             <p>ID: {product.id}</p>
@@ -38,7 +61,6 @@ export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
 
               <label className="switch">
                 <input type="checkbox" readOnly checked={product.isOnSale} />
-                <span className="slider" />
               </label>
             </div>
             <p>Descripción: {product.description}</p>
@@ -47,11 +69,18 @@ export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
               alt="imagen del anuncio"
               className="h-52 w-52 object-cover rounded-lg"
             />
+            <div className="flex gap-4 flex-col">
+              <Button variant="danger" onClick={() => setShowLogoutConfirm(true)}>
+                Borrar producto
+              </Button>
+              <Button variant="primary" onClick={handleBack}>
+                Volver a la lista de productos
+              </Button>
+            </div>
           </div>
         ) : (
           <NotFoundPage />
         )}
-        <button onClick={handleBack}> Volver a la lista de productos</button>
       </Card>
     </article>
   );

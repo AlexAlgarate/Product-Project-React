@@ -21,9 +21,7 @@ export const useProducts = (): UseProductType => {
     try {
       const product = await repo.updateProduct(id, productDTO);
       setError(null);
-      setProducts(
-        products.map((item) => (item.id === product.id ? product : item))
-      );
+      setProducts(products.map((item) => (item.id === product.id ? product : item)));
     } catch (error) {
       setError(error as Error);
     }
@@ -42,18 +40,15 @@ export const useProducts = (): UseProductType => {
 
   const deleteProduct = async (product: Product): Promise<void> => {
     // Estrategia optimista
-    // Operación síncrona --> Estado
-    // Operación asíncrona --> API
+    const previousProduct = products;
 
-    // Elegimos la opción no optimista (en todas las operaciones CRUD)
-    // Estrategia no optimista
-    // Operación asíncrona --> API
+    setProducts(products.filter((item) => item.id !== product.id));
+    setError(null);
+
     try {
       await repo.deleteProduct(product.id);
-      // Operación síncrona --> Estado
-      setError(null);
-      setProducts(products.filter((item) => item.id !== product.id));
     } catch (error) {
+      setProducts(previousProduct);
       setError(error as Error);
     }
   };
