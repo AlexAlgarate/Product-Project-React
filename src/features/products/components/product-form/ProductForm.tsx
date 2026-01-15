@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import type { Product } from '@features/products/types/Product';
 import { Card } from '@shared/components/card/Card';
+import { Button } from '@shared/components/ui';
 
 type ProductFormProps = {
   readonly item: Product | null;
@@ -126,10 +127,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
   };
 
   return (
-    <Card
-      style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
-      title={product.name || 'Producto'}
-    >
+    <Card className="flex flex-col gap-6" title={product.name || 'Producto'}>
       <form className="flex flex-col gap-6" onSubmit={handleSave} onReset={handleReset}>
         {isEditing}
         <div className="flex flex-col gap-6">
@@ -177,9 +175,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
           />
         </div>
 
-        <div>
-          <button type="submit">{isEditing ? 'Guardar' : 'Añadir'}</button>
-          <button type="reset">Cancelar</button>
+        <div className="flex gap-6">
+          <Button variant="secondary" type="reset">
+            Cancelar
+          </Button>
+          <Button variant="primary" type="submit">
+            {isEditing ? 'Guardar' : 'Añadir'}
+          </Button>
         </div>
       </form>
     </Card>
