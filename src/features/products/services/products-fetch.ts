@@ -6,6 +6,14 @@ const PRODUCTS_URL = import.meta.env.VITE_API_URL + '/products';
 class UnauthorizedError extends Error {
   constructor() {
     super('Not authorized');
+    this.name = 'UnauthorizedError';
+  }
+}
+
+class NetworkError extends Error {
+  constructor() {
+    super('No se puede conectar con el servidor. ¿Está levantado el Backend?');
+    this.name = 'NetworkError';
   }
 }
 
@@ -21,11 +29,23 @@ const handleResponse = async <T>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<T> => {
-  const response = await fetch(input, { ...init });
+  let response;
+
+  try {
+    response = await fetch(input, { ...init });
+    
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    throw new NetworkError();
+  }
+  
 
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error('Resource not found');
+    }
+    if (response.status === 401) {
+      throw new UnauthorizedError();
     }
 
     throw new Error(`${response.status.toString()} -- ${response.statusText}`);

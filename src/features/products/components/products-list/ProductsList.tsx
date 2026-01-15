@@ -36,10 +36,16 @@ export const ProductsList: React.FC = () => {
   };
 
   if (error) {
+    let message = error.message;
+
+    if (error.name === 'UnauthorizedError') {
+      message = 'No autorizado. Por favor, inicia sesión.';
+    }
     return (
       <div className="products-wrapper">
         <Card >
-          <p>{error.message}</p>
+          <h2 className='text-2xl text-red-500 font-extrabold'>Error</h2>
+          <p>{message}</p>
         </Card>
       </div>
     );
