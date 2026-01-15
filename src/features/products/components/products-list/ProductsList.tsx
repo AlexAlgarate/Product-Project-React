@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { ProductItem } from '../product-item/ProductItem';
 import { ProductForm } from '../product-form/ProductForm';
 import { useProducts } from './useProducts';
+import { Button } from '@shared/components/ui';
+import { Routes } from '@shared/utils/constants';
 
 export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -28,13 +30,6 @@ export const ProductsList: React.FC = () => {
     }
   };
 
-  const handleAddForm = (): void => {
-    setShowForm(true);
-    if (activeProduct) {
-      setActiveProduct(null);
-    }
-  };
-
   if (error) {
     let message = error.message;
 
@@ -43,10 +38,21 @@ export const ProductsList: React.FC = () => {
     }
     return (
       <div className="products-wrapper">
-        <Card >
-          <h2 className='text-2xl text-red-500 font-extrabold'>Error</h2>
+        <Card>
+          <h2 className="text-2xl text-red-500 font-extrabold">Error</h2>
           <p>{message}</p>
         </Card>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="flex flex-col">
+        NO HAY PRODUCTOS DISPONIBLES
+        <a href={Routes.newProduct}>
+          <Button variant="danger">Crea tu primer producto</Button>
+        </a>
       </div>
     );
   }
@@ -56,8 +62,10 @@ export const ProductsList: React.FC = () => {
       {showForm ? (
         <ProductForm item={activeProduct} onClose={handleCloseForm} />
       ) : (
-        <>
-          <button onClick={handleAddForm}>Añadir producto</button>
+        <div>
+          <a href={Routes.newProduct}>
+            <Button variant="danger">Crea producto</Button>
+          </a>
           <ul>
             {products.map((item) => (
               <li key={item.id}>
@@ -69,7 +77,7 @@ export const ProductsList: React.FC = () => {
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

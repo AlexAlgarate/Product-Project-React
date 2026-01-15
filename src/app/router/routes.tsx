@@ -46,6 +46,13 @@ const productsDetail: RouteObject = {
   lazy: () => import('@features/products/pages/ProductsPage'),
 };
 
+const createProduct: RouteObject = {
+  loader: protectedRoute,
+  path: Routes.newProduct,
+  lazy: () => import('@features/products/pages/CreateProductPage'),
+  
+};
+
 const pageNotFound: RouteObject = {
   path: '*',
   Component: NotFoundPage,
@@ -55,6 +62,14 @@ export const routes: RouteObject[] = [
   {
     path: Routes.home,
     Component: App,
-    children: [home, products, login, register, productsDetail, pageNotFound],
+    children: [
+      home,
+      products,
+      login,
+      register,
+      productsDetail,
+      createProduct,
+      pageNotFound,
+    ],
   },
 ];
