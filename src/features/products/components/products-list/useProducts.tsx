@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 type UseProductType = {
   products: Product[];
   deleteProduct: (product: Product) => void;
-  addProduct: (product: Product) => void;
+  addProduct: (product: ProductDTO) => void;
   updateProduct: (product: Product) => void;
   error: Error | null;
 };
@@ -27,14 +27,16 @@ export const useProducts = (): UseProductType => {
     }
   };
 
-  const addProduct = async (productData: ProductDTO): Promise<void> => {
+  const addProduct = async (productData: ProductDTO): Promise<Product> => {
     try {
       const product = await repo.createProduct(productData);
       // product.id = crypto.randomUUID().slice(0, 4);
       setError(null);
       setProducts([product, ...products]);
+      return product;
     } catch (error) {
       setError(error as Error);
+      throw error;
     }
   };
 
