@@ -5,7 +5,7 @@ import { useAuthToken } from '@features/auth/hooks/useAuthToken';
 import { labelNavbarOptions, Routes } from '@shared/utils/constants';
 import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
 
-import styles from './navbar.module.css';
+import { cn } from '@shared/utils/cn';
 
 export type MenuOption = {
   path: string;
@@ -44,10 +44,17 @@ export const Navbar: React.FC<NavBarProps> = ({ options }) => {
           // Si hay token y es el enlace de "Iniciar sesión", reemplazarlo con "Cerrar Sesión"
           if (item.label === labelNavbarOptions.login && hasToken) {
             return (
-              <li key={item.label} className={styles.item}>
+              <li key={item.label} className="flex items-center">
                 <button
                   onClick={() => setShowLogoutConfirm(true)}
-                  className={`${styles.link} ${styles.logoutButton}`}
+                  className={cn(
+                    'py-2 px-4 rounded-lg text-md font-medium',
+                    'leading-none appearance-none',
+                    'text-red-500 bg-transparent border-0 cursor-pointer',
+                    'transition-all duration-300 ease-in-out',
+                    'hover:text-white hover:bg-red-500/15',
+                    'active:bg-red-500/25'
+                  )}
                 >
                   Cerrar Sesión
                 </button>
@@ -57,11 +64,18 @@ export const Navbar: React.FC<NavBarProps> = ({ options }) => {
 
           // Si no hay token, mostrar todos los items normalmente
           return (
-            <li key={item.label} className={styles.item}>
+            <li key={item.label} className="flex items-center">
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  isActive ? `${styles.link} ${styles.active}` : styles.link
+                  cn(
+                    'px-4 py-2 rounded-lg text-md font-medium',
+                    'text-[#a0a0a0]',
+                    'transition-all duration-300 ease-in-out',
+                    'hover:text-white hover:bg-white/5',
+                    isActive &&
+                      'text-white bg-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
+                  )
                 }
               >
                 {item.label}
