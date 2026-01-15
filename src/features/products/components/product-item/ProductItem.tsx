@@ -39,17 +39,7 @@ export const ProductItem: React.FC<ProductItemProp> = ({
         </p>
         <p>Price: {product.price} €</p>
         <p>Tags: {product.tags.join(', ')}</p>
-        {product.description ? (
-          <div className="flex flex-col gap-2">
-            <p>Descripción:</p>
-            <p className=" text-gray-400 whitespace-pre-line border border-white/20 rounded-md p-2">
-              {product.description}
-            </p>
-          </div>
-        ) : (
-          <p className="text-sm text-orange-400/85">Description not available</p>
-        )}
-
+        
         <label className="inline-flex items-center cursor-default gap-6">
           <span className="select-none text-md font-medium text-heading">
             Is on Sale?
