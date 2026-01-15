@@ -7,23 +7,13 @@ import { useNavigate } from 'react-router';
 type ProductItemProp = {
   readonly product: Product;
   readonly onEdit: (product: Product) => void;
-  readonly onDelete: (product: Product) => void;
 };
 
-export const ProductItem: React.FC<ProductItemProp> = ({
-  product,
-  onEdit,
-  onDelete,
-}) => {
+export const ProductItem: React.FC<ProductItemProp> = ({ product, onEdit }) => {
   const navigate = useNavigate();
 
   const handleEdit = (): void => {
     onEdit(product);
-  };
-
-  const handleDelete = (): void => {
-    console.log('Delete', product.id);
-    onDelete(product);
   };
 
   const handleGoTo = (): void => {
@@ -39,7 +29,7 @@ export const ProductItem: React.FC<ProductItemProp> = ({
         </p>
         <p>Price: {product.price} €</p>
         <p>Tags: {product.tags.join(', ')}</p>
-        
+
         <label className="inline-flex items-center cursor-default gap-6">
           <span className="select-none text-md font-medium text-heading">
             Is on Sale?
@@ -68,7 +58,7 @@ export const ProductItem: React.FC<ProductItemProp> = ({
       </div>
       <div className="flex gap-6 m-4">
         <button onClick={handleEdit}>Editar</button>
-        <button onClick={handleDelete}>Borrar producto</button>
+
         <button onClick={handleGoTo}>Detalles</button>
       </div>
     </Card>

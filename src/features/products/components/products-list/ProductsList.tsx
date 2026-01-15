@@ -38,7 +38,7 @@ export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
-  const { products, deleteProduct, addProduct, updateProduct, error } = useProducts();
+  const { products, addProduct, updateProduct, error } = useProducts();
 
   const handleEditForm = (product: Product): void => {
     setShowForm(true);
@@ -92,7 +92,7 @@ export const ProductsList: React.FC = () => {
                 <ProductItem
                   product={item}
                   onEdit={handleEditForm}
-                  onDelete={deleteProduct}
+                  
                 />
               </li>
             ))}
