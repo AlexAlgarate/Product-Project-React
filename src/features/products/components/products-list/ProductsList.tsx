@@ -39,7 +39,7 @@ export const ProductsList: React.FC = () => {
     return (
       <div className="products-wrapper">
         <Card>
-          <h2 className="text-2xl text-red-500 font-extrabold">Error</h2>
+          <h2 className="text-3xl text-red-500 font-extrabold">Error</h2>
           <p>{message}</p>
         </Card>
       </div>
