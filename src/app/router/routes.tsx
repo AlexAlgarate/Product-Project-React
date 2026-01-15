@@ -4,53 +4,65 @@ import { App } from '../../App';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 import { constants, labelNavbarOptions, Routes } from '@shared/utils/constants';
 
-const protectedRoute: RouteObject['loader'] = () => {
-  const token =
+const hasAuthToken = (): boolean =>
+  Boolean(
     localStorage.getItem(constants.tokenKey) ??
-    sessionStorage.getItem(constants.tokenKey);
+      sessionStorage.getItem(constants.tokenKey)
+  );
 
-  if (!token) {
+const redirectLogin = (): void => {
+  if (!hasAuthToken()) {
     throw redirect(Routes.login);
   }
-
+};
+const protectedLoader: RouteObject['loader'] = () => {
+  redirectLogin();
   return null;
 };
 
-const home: RouteObject = {
-  index: true,
-  lazy: () => import('@features/home/pages/HomePage'),
-  id: labelNavbarOptions.home,
+const rootIndexLoader: RouteObject['loader'] = () => {
+  redirectLogin();
+  throw redirect(Routes.products);
 };
 
-const login: RouteObject = {
-  path: Routes.login,
-  lazy: () => import('@features/auth/pages/LoginPage'),
-  id: labelNavbarOptions.login,
-};
+const createLazyRoute = (
+  path: string,
+  importFn: () => Promise<{ Component: React.ComponentType }>,
+  id?: string
+): RouteObject => ({
+  path,
+  lazy: importFn,
+  ...(id && { id }),
+});
 
-const register: RouteObject = {
-  path: Routes.register,
-  lazy: () => import('@features/auth/pages/RegisterPage'),
-};
+const authRoutes: RouteObject[] = [
+  createLazyRoute(
+    Routes.login,
+    () => import('@features/auth/pages/LoginPage'),
+    labelNavbarOptions.login
+  ),
+  createLazyRoute(Routes.register, () => import('@features/auth/pages/RegisterPage')),
+];
 
-const products: RouteObject = {
-  loader: protectedRoute,
-  path: Routes.products,
-  lazy: () => import('@features/products/pages/ProductsPage'),
-  id: labelNavbarOptions.products,
-};
+const productRoutes: RouteObject[] = [
+  createLazyRoute(
+    Routes.products,
+    () => import('@features/products/pages/ProductsPage'),
+    labelNavbarOptions.products
+  ),
+  createLazyRoute(
+    Routes.productDetail,
+    () => import('@features/products/pages/ProductsPage')
+  ),
+  createLazyRoute(
+    Routes.newProduct,
+    () => import('@features/products/pages/CreateProductPage')
+  ),
+];
 
-const productsDetail: RouteObject = {
-  loader: protectedRoute,
-  path: Routes.productDetail,
-  lazy: () => import('@features/products/pages/ProductsPage'),
-};
-
-const createProduct: RouteObject = {
-  loader: protectedRoute,
-  path: Routes.newProduct,
-  lazy: () => import('@features/products/pages/CreateProductPage'),
-  
+const protectedRoutes: RouteObject = {
+  loader: protectedLoader,
+  children: productRoutes,
 };
 
 const pageNotFound: RouteObject = {
@@ -63,12 +75,10 @@ export const routes: RouteObject[] = [
     path: Routes.home,
     Component: App,
     children: [
-      home,
-      products,
-      login,
-      register,
-      productsDetail,
-      createProduct,
+      { index: true, loader: rootIndexLoader },
+
+      protectedRoutes,
+      ...authRoutes,
       pageNotFound,
     ],
   },

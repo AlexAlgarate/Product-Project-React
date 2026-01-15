@@ -2,29 +2,24 @@ import type { RouteObject } from 'react-router';
 import type { MenuOption } from '@shared/components/navbar/Navbar';
 import { routes } from '@app/router/routes';
 
-/**
- * Extracts menu options from configured routes
- */
-export const getMenuOptionsFromRoutes = (): MenuOption[] =>
-  (routes[0].children as RouteObject[])
-    .filter((route) => 'id' in route)
-    .map((route) => ({
-      path: route.path as string,
-      label: route.id as string,
-    }));
+export const extractMenuOptions = (routes: RouteObject[]): MenuOption[] => {
+  return routes.flatMap((route) => {
+    const current: MenuOption[] =
+      route.id && route.path
+        ? [
+            {
+              path: route.path,
+              label: route.id,
+            },
+          ]
+        : [];
 
-/**
- * Returns all menu options for the application
- * Includes options extracted from routes + additional options
- */
-export const getMenuOptions = (
-  additionalOptions: MenuOption[] | null = null
-): MenuOption[] => {
-  const routeOptions = getMenuOptionsFromRoutes();
+    const children = route.children ? extractMenuOptions(route.children) : [];
+    return [...current, ...children];
+  });
+};
 
-  // Opciones adicionales que no están en routes.tsx (next features?)
-  if (additionalOptions) {
-    return [...routeOptions, ...additionalOptions];
-  }
-  return [...routeOptions];
+export const getMenuOptions = (): MenuOption[] => {
+  const rootRoutes = routes[0].children ?? [];
+  return extractMenuOptions(rootRoutes);
 };
