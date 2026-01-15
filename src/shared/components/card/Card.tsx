@@ -1,19 +1,32 @@
+import { cn } from '@shared/utils/cn';
 import React from 'react';
 import type { ReactNode } from 'react';
 
-type Props = {
+type CardProps = {
   readonly children: ReactNode;
   readonly title?: string;
-  readonly style?: React.CSSProperties;
+  readonly className?: string;
 };
 
-export const Card: React.FC<Props> = ({ children, title, style }) => {
+export const Card: React.FC<CardProps> = ({ children, title, className }) => {
+  const base = `
+  bg-gray-card-bg
+    border border-gray-card-border
+    rounded-xl
+    p-5
+    shadow-sm
+    transition-all
+    duration-200
+    ease-in-out
+    hover:shadow-md
+    hover:border-gray-500
+  `;
+
+  const classes = cn(base, className);
+
   return (
-    <div
-      style={style}
-      className="p-4 border border-solid border-gray-card rounded-lg shadow-xl"
-    >
-      {title && <h3>{title}</h3>}
+    <div className={classes}>
+      {title && <h3 className="mb-3 text-lg font-semibold tracking-tight">{title}</h3>}
       {children}
     </div>
   );
