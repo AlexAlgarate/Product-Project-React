@@ -1,13 +1,13 @@
-import type { Product } from '@features/products/types/Product';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useDetail } from './useDetail';
+
+import type { Product } from '@features/products/types/Product';
+import { useProduct } from '../../hooks/useProduct';
 import { constants, Routes } from '@shared/utils/constants';
 import { Card } from '@shared/components/card/Card';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 import { Button } from '@shared/components/ui';
 import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
-import { useProducts } from '../products-list/useProducts';
 
 type ProductsDetailProps = {
   readonly id: Product['id'];
@@ -16,9 +16,8 @@ type ProductsDetailProps = {
 export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const { deleteProduct } = useProducts();
 
-  const { product } = useDetail(id);
+  const { product, deleteProduct } = useProduct(id);
 
   const handleBack = (): void => {
     navigate(Routes.products);
@@ -27,7 +26,7 @@ export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
   const handleConfirmRemoveProduct = useCallback(() => {
     if (!product) return;
 
-    deleteProduct(product as Product);
+    deleteProduct();
 
     navigate(Routes.products);
   }, [deleteProduct, navigate, product]);

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 type UseProductType = {
   products: Product[];
-  deleteProduct: (product: Product) => void;
   addProduct: (product: ProductDTO) => void;
   updateProduct: (product: Product) => void;
   error: Error | null;
@@ -40,21 +39,6 @@ export const useProducts = (): UseProductType => {
     }
   };
 
-  const deleteProduct = async (product: Product): Promise<void> => {
-    // Estrategia optimista
-    const previousProduct = products;
-
-    setProducts(products.filter((item) => item.id !== product.id));
-    setError(null);
-
-    try {
-      await repo.deleteProduct(product.id);
-    } catch (error) {
-      setProducts(previousProduct);
-      setError(error as Error);
-    }
-  };
-
   useEffect(() => {
     const loadProducts = async (): Promise<void> => {
       try {
@@ -73,7 +57,6 @@ export const useProducts = (): UseProductType => {
   return {
     products,
     error,
-    deleteProduct,
     addProduct,
     updateProduct,
   };

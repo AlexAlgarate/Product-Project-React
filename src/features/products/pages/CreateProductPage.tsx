@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { Card } from '@shared/components/card/Card';
 import { Button } from '@shared/components/ui';
-import { useProducts } from '../components/products-list/useProducts';
+import { useProducts } from '../hooks/useProducts';
 import { Routes } from '@shared/utils/constants';
 
 import type { ProductDTO } from '../types/Product';
