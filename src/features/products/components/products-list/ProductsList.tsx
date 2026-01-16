@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import type { Product } from '@features/products/types/Product';
 import { Card } from '@shared/components/ui/Card/Card';
-import { ProductItem } from '../product-item/ProductItem';
-import { ProductForm } from '../product-form/ProductForm';
+import { ProductItem } from '../ProductItem/ProductItem';
+import { ProductForm } from '../ProductForm/ProductForm';
 import { useProducts } from '../../hooks/useProducts';
 import { Button } from '@shared/components/ui';
 import { Routes } from '@shared/utils/constants';
