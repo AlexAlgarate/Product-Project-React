@@ -5,7 +5,7 @@ import type { Register, ButtonState } from '../types/types';
 import { InlineToast } from '../components/InlineToast';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
-import { FormField } from '../components/FormField';
+import { Input } from '../../../shared/components/ui/Input/Input';
 import { SubmitButton } from '../components/SubmitButton';
 
 import { redirectTimeout, Routes } from '@shared/utils/constants';
@@ -102,7 +102,7 @@ export const RegisterPage: React.FC = () => {
       {error && <InlineToast message={error} type="error" visible={true} />}
 
       <form onSubmit={handleSubmit}>
-        <FormField
+        <Input
           id={`${id}-firstName`}
           ref={firstInputRef}
           name="firstName"
@@ -114,7 +114,7 @@ export const RegisterPage: React.FC = () => {
           onChange={handleChange}
         />
 
-        <FormField
+        <Input
           id={`${id}-email`}
           name="email"
           label="Email"
@@ -126,7 +126,7 @@ export const RegisterPage: React.FC = () => {
           onChange={handleChange}
         />
 
-        <FormField
+        <Input
           id={`${id}-password`}
           name="password"
           label="Contraseña"
@@ -139,7 +139,7 @@ export const RegisterPage: React.FC = () => {
           onChange={handleChange}
         />
 
-        <FormField
+        <Input
           id={`${id}-isOkConditions`}
           name="isOkConditions"
           label="Acepto los términos y condiciones"

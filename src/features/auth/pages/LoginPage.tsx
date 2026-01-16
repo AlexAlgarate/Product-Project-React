@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
 import { InlineToast } from '../components/InlineToast';
 import { Routes } from '@shared/utils/constants';
-import { FormField } from '../components/FormField';
+import { Input } from '../../../shared/components/ui/Input/Input';
 import { SubmitButton } from '../components/SubmitButton';
 import { FooterAuth } from '../components/FooterAuth';
 
@@ -102,7 +102,7 @@ export const LoginPage: React.FC = () => {
       )}
 
       <form onSubmit={handleSubmit} noValidate>
-        <FormField
+        <Input
           id={`${id}-email`}
           name="email"
           label="Email"
@@ -114,7 +114,7 @@ export const LoginPage: React.FC = () => {
           onChange={handleChange}
         />
 
-        <FormField
+        <Input
           id={`${id}-password`}
           name="password"
           label="Contraseña"
@@ -127,7 +127,7 @@ export const LoginPage: React.FC = () => {
           onChange={handleChange}
         />
 
-        <FormField
+        <Input
           id={`${id}-rememberMe`}
           name="rememberMe"
           label="Recuérdame"

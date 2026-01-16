@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '@shared/utils/cn';
 
-export type FormFieldProps = {
+export type InputProps = {
   id: string;
   name: string;
   label: string;
@@ -17,7 +17,7 @@ export type FormFieldProps = {
   ref?: React.Ref<HTMLInputElement>;
 };
 
-export const FormField: React.FC<FormFieldProps> = ({
+export const Input: React.FC<InputProps> = ({
   id,
   name,
   label,
@@ -98,3 +98,5 @@ export const FormField: React.FC<FormFieldProps> = ({
     </div>
   );
 };
+
+Input.displayName = 'Input';
