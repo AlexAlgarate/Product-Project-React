@@ -24,12 +24,22 @@ export function useAuth(): UseAuthReturn {
   }, []);
 
   const login = useCallback(async (payload: Login): Promise<string> => {
+    if (!payload.email.trim() || !payload.password.trim()) {
+      const error = new Error('Por favor, completa todos los campos');
+      setError(error.message);
+      throw error;
+    }
+
     setIsLoading(true);
     setError(null);
     setSuccessMessage(null);
 
     try {
       const token = await loginUser(payload);
+
+      if (!token) {
+        throw new Error('No se recibió token de autenticación');
+      }
 
       const storage = payload.rememberMe ? localStorage : sessionStorage;
       storage.setItem(constants.tokenKey, token);
@@ -47,32 +57,34 @@ export function useAuth(): UseAuthReturn {
     }
   }, []);
 
-  const register = useCallback(async (payload: Register): Promise<string> => {
-    setIsLoading(true);
-    setError(null);
-    setSuccessMessage(null);
+  const register = useCallback(
+    async (payload: Register): Promise<string> => {
+      setIsLoading(true);
+      setError(null);
+      setSuccessMessage(null);
 
-    try {
-      const response = await registerUser(payload);
-      setSuccessMessage(response?.message || 'Usuario registrado correctamente');
+      try {
+        const response = await registerUser(payload);
+        setSuccessMessage(response?.message || 'Usuario registrado correctamente');
 
-      const token = await login({
-        email: payload.email,
-        password: payload.password,
-        rememberMe: false,
-      });
+        const token = await login({
+          email: payload.email,
+          password: payload.password,
+          rememberMe: false,
+        });
 
-      return token
-
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Error al registrar usuario';
-      setError(message);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  }, [login]);
+        return token;
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Error al registrar usuario';
+        setError(message);
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [login]
+  );
 
   return {
     isLoading,
