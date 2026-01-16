@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router';
 
-import { Layout } from '@shared/components/layout/Layout';
+import { Layout } from '@shared/components/layouts/Layout';
 
 import './App.css';
 
