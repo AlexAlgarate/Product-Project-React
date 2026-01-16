@@ -12,7 +12,7 @@ export const Routes = {
   register: '/register',
   home: '/',
   productDetail: '/products/:id',
-  newProduct: '/products/new-product',
+  newProduct: '/products/new',
 };
 
 export const labelNavbarOptions = {
