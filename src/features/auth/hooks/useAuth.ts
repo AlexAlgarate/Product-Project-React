@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { Login, Register } from '../types/types';
 import { loginUser, registerUser } from '../api/authApi';
 import { constants } from '@shared/utils/constants';
+import { StorageTokenManager } from '../utils/storage';
 
 export type UseAuthReturn = {
   isLoading: boolean;
@@ -22,27 +23,7 @@ export function useAuth(): UseAuthReturn {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [hasToken, setHasToken] = useState<boolean>(false);
 
-  const checkToken = useCallback((): boolean => {
-    const token =
-      localStorage.getItem(constants.tokenKey) ||
-      sessionStorage.getItem(constants.tokenKey);
-    return !!token;
-  }, []);
-
-  const setToken = useCallback((token: string, rememberMe: boolean): void => {
-    const storage = rememberMe ? localStorage : sessionStorage;
-    storage.setItem(constants.tokenKey, token);
-
-    window.dispatchEvent(new Event(constants.storageChange));
-  }, []);
-
-  const clearToken = useCallback((): void => {
-    localStorage.removeItem(constants.tokenKey);
-    sessionStorage.removeItem(constants.tokenKey);
-
-    window.dispatchEvent(new Event(constants.storage));
-    window.dispatchEvent(new Event(constants.storageChange));
-  }, []);
+  const { checkToken, setToken, clearToken } = StorageTokenManager();
 
   const clearMessages = useCallback((): void => {
     setError(null);
