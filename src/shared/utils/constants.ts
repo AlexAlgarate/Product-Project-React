@@ -18,7 +18,8 @@ export const Routes = {
 export const labelNavbarOptions = {
   login: 'Iniciar sesión',
   home: 'Inicio',
-  products: 'Productos',
+  products: 'Listado de productos',
+  newProduct: 'Crear producto',
 };
 
 export const redirectTimeout = 3000;

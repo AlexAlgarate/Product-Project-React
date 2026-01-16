@@ -19,6 +19,7 @@ const initialState: Login = {
 export const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState<Login>(initialState);
   const [buttonState, setButtonState] = useState<ButtonState>('idle');
+  const [showToast, setShowToast] = useState(false);
 
   const { login, error, clearMessages } = useAuth();
 
@@ -45,11 +46,13 @@ export const LoginPage: React.FC = () => {
       }
     };
   }, []);
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
     async (event) => {
       event.preventDefault();
       clearMessages();
       setButtonState('loading');
+      setShowToast(false);
 
       try {
         await login(formData);
@@ -62,6 +65,7 @@ export const LoginPage: React.FC = () => {
         }, 1000);
       } catch {
         setButtonState('error');
+        setShowToast(true);
         redirectTimeoutRef.current = window.setTimeout(() => {
           setButtonState('idle');
         }, 1500);
@@ -69,6 +73,11 @@ export const LoginPage: React.FC = () => {
     },
     [clearMessages, login, formData, navigate]
   );
+
+  const handleToastClose = useCallback(() => {
+    setShowToast(false);
+    clearMessages();
+  }, [clearMessages]);
 
   return (
     <AuthLayout
@@ -82,7 +91,15 @@ export const LoginPage: React.FC = () => {
         />
       }
     >
-      {error && <InlineToast message={error} type="error" visible={true} />}
+      {error && (
+        <InlineToast
+          message={error}
+          type="error"
+          visible={showToast}
+          duration={1500}
+          onClose={handleToastClose}
+        />
+      )}
 
       <form onSubmit={handleSubmit} noValidate>
         <FormField

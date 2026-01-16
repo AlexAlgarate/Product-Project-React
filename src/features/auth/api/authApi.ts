@@ -14,13 +14,19 @@ export const loginUser = async (payload: Login): Promise<string> => {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error('Email o contraseña no válidos.');
+    }
     throw new Error(
-      `Error iniciando sesión: ${response.status} -- ${response.statusText}`
+      `Error en el servidor: ${response.status} - ${response.statusText}`
     );
   }
 
   const data = await response.json();
 
+  if (!data.accessToken) {
+    throw new Error('No se recibió token de autenticación');
+  }
   return data.accessToken;
 };
 
