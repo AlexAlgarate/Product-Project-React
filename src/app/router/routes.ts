@@ -1,29 +1,9 @@
-import { redirect, type RouteObject } from 'react-router';
+import { type RouteObject } from 'react-router';
 
 import { App } from '../../App';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
-import { constants, labelNavbarOptions, Routes } from '@shared/utils/constants';
-
-const hasAuthToken = (): boolean =>
-  Boolean(
-    localStorage.getItem(constants.tokenKey) ??
-      sessionStorage.getItem(constants.tokenKey)
-  );
-
-const redirectLogin = (): void => {
-  if (!hasAuthToken()) {
-    throw redirect(Routes.login);
-  }
-};
-const protectedLoader: RouteObject['loader'] = () => {
-  redirectLogin();
-  return null;
-};
-
-const rootIndexLoader: RouteObject['loader'] = () => {
-  redirectLogin();
-  throw redirect(Routes.products);
-};
+import { labelNavbarOptions, Routes } from '@shared/utils/constants';
+import { protectedLoader, rootIndexLoader } from './guards';
 
 const createLazyRoute = (
   path: string,
