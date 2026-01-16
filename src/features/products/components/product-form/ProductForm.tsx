@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import type { Product } from '@features/products/types/Product';
-import { Card } from '@shared/components/card/Card';
+import { Card } from '@shared/components/ui/Card/Card';
 import { Button } from '@shared/components/ui';
 
 type ProductFormProps = {

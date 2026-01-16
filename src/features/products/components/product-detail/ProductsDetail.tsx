@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import type { Product } from '@features/products/types/Product';
 import { useProduct } from '../../hooks/useProduct';
 import { constants, Routes } from '@shared/utils/constants';
-import { Card } from '@shared/components/card/Card';
+import { Card } from '@shared/components/ui/Card/Card';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 import { Button } from '@shared/components/ui';
 import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';

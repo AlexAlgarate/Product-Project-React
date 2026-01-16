@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Card } from '@shared/components/card/Card';
+import { Card } from '@shared/components/ui/Card/Card';
 import { Button } from '@shared/components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { Routes } from '@shared/utils/constants';

@@ -1,5 +1,5 @@
 import type { Product } from '@features/products/types/Product';
-import { Card } from '@shared/components/card/Card';
+import { Card } from '@shared/components/ui/Card/Card';
 import { constants } from '@shared/utils/constants';
 import React from 'react';
 import { useNavigate } from 'react-router';

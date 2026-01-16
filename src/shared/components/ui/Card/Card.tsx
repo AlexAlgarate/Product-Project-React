@@ -2,7 +2,7 @@ import { cn } from '@shared/utils/cn';
 import React from 'react';
 import type { ReactNode } from 'react';
 
-type CardProps = {
+export type CardProps = {
   readonly children: ReactNode;
   readonly title?: string;
   readonly className?: string;
@@ -31,3 +31,5 @@ export const Card: React.FC<CardProps> = ({ children, title, className }) => {
     </div>
   );
 };
+
+Card.displayName = 'Card';

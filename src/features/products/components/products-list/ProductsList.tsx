@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import type { Product } from '@features/products/types/Product';
-import { Card } from '@shared/components/card/Card';
+import { Card } from '@shared/components/ui/Card/Card';
 import { ProductItem } from '../product-item/ProductItem';
 import { ProductForm } from '../product-form/ProductForm';
 import { useProducts } from '../../hooks/useProducts';
