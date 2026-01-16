@@ -56,7 +56,8 @@ const productRoutes: RouteObject[] = [
   ),
   createLazyRoute(
     Routes.newProduct,
-    () => import('@features/products/pages/CreateProductPage')
+    () => import('@features/products/pages/CreateProductPage'),
+    'Crear nuevo producto'
   ),
 ];
 
