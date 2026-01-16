@@ -9,11 +9,11 @@ import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 import { Button } from '@shared/components/ui';
 import { ConfirmModal } from '@shared/components/feedback/ModalConfirm';
 
-type ProductsDetailProps = {
+type ProductDetailProps = {
   readonly id: Product['id'];
 };
 
-export const ProductsDetail: React.FC<ProductsDetailProps> = ({ id }) => {
+export const ProductDetail: React.FC<ProductDetailProps> = ({ id }) => {
   const navigate = useNavigate();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
