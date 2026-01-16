@@ -1,5 +1,5 @@
 import React, { useState, useId, useRef, useEffect, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import type { Login, ButtonState } from '../types/types';
 import { useAuth } from '../hooks/useAuth';
@@ -8,8 +8,7 @@ import { InlineToast } from '../components/InlineToast';
 import { Routes } from '@shared/utils/constants';
 import { FormField } from '../components/FormField';
 import { SubmitButton } from '../components/SubmitButton';
-
-import styles from '../styles/authForm.module.css';
+import { FooterAuth } from '../components/FooterAuth';
 
 const initialState: Login = {
   email: '',
@@ -71,19 +70,18 @@ export const LoginPage: React.FC = () => {
     [clearMessages, login, formData, navigate]
   );
 
-  const footer = (
-    <div className={styles.authFooter}>
-      <p>
-        ¿No tienes una cuenta?{' '}
-        <Link to="/register" className={styles.link}>
-          Regístrate aquí
-        </Link>
-      </p>
-    </div>
-  );
-
   return (
-    <AuthLayout title="Iniciar sesión" subtitle="Bienvenido de nuevo" footer={footer}>
+    <AuthLayout
+      title="Iniciar sesión"
+      subtitle="Bienvenido de nuevo"
+      footer={
+        <FooterAuth
+          text="¿No tienes una cuenta? "
+          hrefLink="/register"
+          textLink="Regístrate aquí"
+        />
+      }
+    >
       {error && <InlineToast message={error} type="error" visible={true} />}
 
       <form onSubmit={handleSubmit} noValidate>

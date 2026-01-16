@@ -1,5 +1,5 @@
 import React, { useState, useId, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import type { Register, ButtonState } from '../types/types';
 import { InlineToast } from '../components/InlineToast';
@@ -8,8 +8,8 @@ import { AuthLayout } from '../components/AuthLayout';
 import { FormField } from '../components/FormField';
 import { SubmitButton } from '../components/SubmitButton';
 
-import styles from '../styles/authForm.module.css';
 import { redirectTimeout, Routes } from '@shared/utils/constants';
+import { FooterAuth } from '../components/FooterAuth';
 
 const INITIAL_STATE: Register = {
   firstName: '',
@@ -48,7 +48,7 @@ export const RegisterPage: React.FC = () => {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
-  
+
   useEffect(() => {
     return (): void => {
       if (redirectTimeoutRef.current) {
@@ -79,22 +79,17 @@ export const RegisterPage: React.FC = () => {
     }
   };
 
-  const footer = (
-    <div className={styles.authFooter}>
-      <p>
-        ¿Ya tienes una cuenta?{' '}
-        <Link to="/login" className={styles.link}>
-          Inicia sesión
-        </Link>
-      </p>
-    </div>
-  );
-
   return (
     <AuthLayout
       title="Crear cuenta"
       subtitle="Únete a nuestra comunidad"
-      footer={footer}
+      footer={
+        <FooterAuth
+          text="¿Ya tienes una cuenta? "
+          hrefLink="/login"
+          textLink="Inicia sesión"
+        />
+      }
     >
       {successMessage && (
         <InlineToast

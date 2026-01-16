@@ -8,12 +8,6 @@
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-a {
-  font-family: inherit;
-  text-decoration: inherit;
-  color: inherit;
-}
-
 body {
   margin: 0;
   display: flex;

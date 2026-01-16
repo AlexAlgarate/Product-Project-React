@@ -4,6 +4,33 @@
   --color-gray-card: rgb(66, 65, 65);
   --color-gray-card-bg: rgb(32, 32, 32);
   --color-gray-card-border: rgb(80, 80, 80);
+  --color-error: #ef4444;
+  --color-error-dark: #dc2626;
+  --color-success: #10b981;
+  --color-success-dark: oklab(59.598% -0.12201 0.03671);
+  --color-primary: #646cff;
+  --color-primary-hover: #535bf2;
+  --color-text-light: #e0e0e0;
+  --color-text-muted: #999;
+  --color-text-placeholder: #666;
+  --color-bg-dark: #1a1a1a;
+  --color-border: #404040;
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-primary-focus: rgba(100, 108, 255, 0.1);
+  --color-error-focus: #ef44441a;
+  --color-success-bg: #10b9811a;
+  --color-white-shadow: rgba(255, 255, 255, 0.3);
+  --color-primary-shadow: rgba(100, 108, 255, 0.4);
+
+  /* spacing */
+  --spacing-input-y: 0.625rem;
+  --spacing-input-x: 0.875rem;
+
+  /* radius */
+  --radius-base: 8px;
+
+  /* transitions */
+  --transition-fast: 200ms ease;
 }
 
 /* =========================
@@ -29,16 +56,6 @@
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-  }
-
-  a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-  }
-
-  a:hover {
-    color: #535bf2;
   }
 
   h1 {

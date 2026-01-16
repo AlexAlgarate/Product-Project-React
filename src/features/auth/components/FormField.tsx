@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/authForm.module.css';
+import { cn } from '@shared/utils/cn';
 
 export type FormFieldProps = {
   id: string;
@@ -36,7 +36,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   if (isCheckbox) {
     return (
-      <div className={styles.groupControlLine}>
+      <div className="flex items-center gap-2 mb-4">
         <input
           type="checkbox"
           id={id}
@@ -47,16 +47,19 @@ export const FormField: React.FC<FormFieldProps> = ({
           ref={ref}
         />
         <label htmlFor={id}>{label}</label>
-        {error && <span className={styles.fieldError}>{error}</span>}
+        {error && <span className="block text-#ef4444 text-sm mt-1">{error}</span>}
       </div>
     );
   }
 
   return (
-    <div className={styles.groupControl}>
-      <label htmlFor={id} className={styles.label}>
+    <div className="mb-5">
+      <label
+        htmlFor={id}
+        className="block font-semibold text-[.9rem] mb-1.5 text-text-light"
+      >
         {label}
-        {required && <span className={styles.required}>*</span>}
+        {required && <span className="text-error ml-1">*</span>}
       </label>
       <input
         type={type}
@@ -68,13 +71,27 @@ export const FormField: React.FC<FormFieldProps> = ({
         autoComplete={autoComplete}
         value={value}
         onChange={onChange}
-        className={`${styles.input} ${error ? styles.inputError : ''}`}
+        className={cn(
+          `
+            w-full box-border px-3.5 py-2.5 text-[0.95rem] 
+            rounded-lg bg-bg-dark text-text-light border
+            placeholder:text-text-placeholder transition-all duration-200
+            focus:outline-none focus:ring-2
+          `,
+          error
+            ? 'border-error focus:border-error focus:ring-error/10'
+            : 'border-border focus:border-primary focus:ring-primary/10'
+        )}
         aria-invalid={error ? 'true' : 'false'}
         aria-describedby={error ? `${id}-error` : undefined}
         ref={ref}
       />
       {error && (
-        <span id={`${id}-error`} className={styles.fieldError} role="alert">
+        <span
+          id={`${id}-error`}
+          className="block text-#ef4444 text-sm mt-1"
+          role="alert"
+        >
           {error}
         </span>
       )}
