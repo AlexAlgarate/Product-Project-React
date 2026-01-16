@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import type { Login, ButtonState } from '../types/types';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
-import { InlineToast } from '../components/InlineToast';
+import { InlineToast } from '../../../shared/components/feedback/InlineToast';
 import { Routes } from '@shared/utils/constants';
 import { Input } from '../../../shared/components/ui/Input/Input';
 import { SubmitButton } from '../components/SubmitButton';

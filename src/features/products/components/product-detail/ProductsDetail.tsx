@@ -7,7 +7,7 @@ import { constants, Routes } from '@shared/utils/constants';
 import { Card } from '@shared/components/ui/Card/Card';
 import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
 import { Button } from '@shared/components/ui';
-import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
+import { ConfirmModal } from '@shared/components/feedback/ModalConfirm';
 
 type ProductsDetailProps = {
   readonly id: Product['id'];

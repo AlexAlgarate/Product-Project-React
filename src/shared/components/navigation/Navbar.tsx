@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
 
 import { labelNavbarOptions, Routes } from '@shared/utils/constants';
-import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
+import { ConfirmModal } from '@shared/components/feedback/ModalConfirm';
 import { useAuth } from '@features/auth/hooks/useAuth';
 
 import { cn } from '@shared/utils/cn';
