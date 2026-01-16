@@ -7,33 +7,7 @@ import { ProductForm } from '../product-form/ProductForm';
 import { useProducts } from '../../hooks/useProducts';
 import { Button } from '@shared/components/ui';
 import { Routes } from '@shared/utils/constants';
-
-const NotProductsAvailable: React.FC = () => {
-  return (
-    <Card
-      className="
-      relative flex flex-col items-center gap-6
-      rounded-2xl border border-white/10 bg-linear-to-b
-    from-white/5 to-transparent p-10 text-center
-      shadow-lg backdrop-blur"
-    >
-      <h2 className="text-2xl font-semibold tracking-tight text-orange-600/80">
-        No hay productos disponibles
-      </h2>
-
-      <p className="max-w-md text-white/80">
-        Aún no has creado ningún producto. Empieza ahora y añade el primero a tu
-        catálogo.
-      </p>
-
-      <a href={Routes.newProduct}>
-        <Button variant="primary" size="lg">
-          Crear mi primer producto
-        </Button>
-      </a>
-    </Card>
-  );
-};
+import { EmptyProducts } from '../EmptyProducts/EmptyProducts';
 
 export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -75,7 +49,7 @@ export const ProductsList: React.FC = () => {
   }
 
   if (products.length === 0) {
-    return <NotProductsAvailable />;
+    return <EmptyProducts />;
   }
 
   return (
@@ -90,11 +64,7 @@ export const ProductsList: React.FC = () => {
           <ul>
             {products.map((item) => (
               <li key={item.id}>
-                <ProductItem
-                  product={item}
-                  onEdit={handleEditForm}
-                  
-                />
+                <ProductItem product={item} onEdit={handleEditForm} />
               </li>
             ))}
           </ul>
