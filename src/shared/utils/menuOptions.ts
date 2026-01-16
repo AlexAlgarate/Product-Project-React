@@ -1,5 +1,5 @@
 import type { RouteObject } from 'react-router';
-import type { MenuOption } from '@shared/components/navbar/Navbar';
+import type { MenuOption } from '@shared/components/navigation/Navbar';
 import { routes } from '@app/router/routes';
 
 export const extractMenuOptions = (routes: RouteObject[]): MenuOption[] => {

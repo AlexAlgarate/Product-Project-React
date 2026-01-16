@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router';
 
-import { Navbar } from '../navbar/Navbar';
+import { Navbar } from './Navbar';
 import { getMenuOptions } from '@shared/utils/menuOptions';
 import { Routes } from '@shared/utils/constants';
 
