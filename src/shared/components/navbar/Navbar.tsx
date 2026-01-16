@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router';
-import { useAuthToken } from '@features/auth/hooks/useAuthToken';
 
 import { labelNavbarOptions, Routes } from '@shared/utils/constants';
 import { ConfirmModal } from '@shared/components/modal-confirm/ModalConfirm';
+import { useAuth } from '@features/auth/hooks/useAuth';
 
 import { cn } from '@shared/utils/cn';
 import { Button } from '../ui';
@@ -20,7 +20,7 @@ type NavBarProps = {
 export const Navbar: React.FC<NavBarProps> = ({ options }) => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  const { hasToken, logout } = useAuthToken();
+  const { hasToken, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleConfirmLogout = useCallback(() => {
