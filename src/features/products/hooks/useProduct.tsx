@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import repo from '@features/products/services/products-fetch';
+import repo from '@features/products/services/productsApi';
 import type { Product, ProductDTO } from '@features/products/types/Product';
 
 
