@@ -1,5 +1,5 @@
 import repo from '@features/products/api/productsApi';
-import type { Product, ProductDTO } from '@features/products/types/Product';
+import type { Product, ProductDTO } from '@features/products/types/product.types';
 import { useEffect, useState } from 'react';
 
 type UseProductType = {

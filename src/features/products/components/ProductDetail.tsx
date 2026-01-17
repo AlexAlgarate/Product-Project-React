@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { Product } from '@features/products/types/Product';
+import type { Product } from '@features/products/types/product.types';
 import { useProduct } from '../../hooks/useProduct';
 import { constants, Routes } from '@shared/utils/constants';
 import { Card } from '@shared/components/ui/Card/Card';
-import { NotFoundPage } from '@shared/components/not-found-page/NotFoundPage';
+import { NotFoundPage } from '@shared/pages/NotFoundPage';
 import { Button } from '@shared/components/ui';
 import { ConfirmModal } from '@shared/components/feedback/ModalConfirm';
 

@@ -1,4 +1,4 @@
-import type { Product, ProductDTO } from '@features/products/types/Product';
+import type { Product, ProductDTO } from '@features/products/types/product.types';
 import { getToken } from '@shared/utils/auth';
 
 const PRODUCTS_URL = import.meta.env.VITE_API_URL + '/products';
@@ -27,18 +27,17 @@ const getAuthHeaders = (): { Authorization: string } => {
 
 const handleResponse = async <T>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<T> => {
   let response;
 
   try {
     response = await fetch(input, { ...init });
-    
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     throw new NetworkError();
   }
-  
 
   if (!response.ok) {
     if (response.status === 404) {
@@ -81,7 +80,7 @@ const createProduct = async (productData: ProductDTO): Promise<Product> => {
 
 const updateProduct = async (
   id: Product['id'],
-  product: Partial<ProductDTO>
+  product: Partial<ProductDTO>,
 ): Promise<Product> => {
   const token = getAuthHeaders();
 

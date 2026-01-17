@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { Login, Register } from '../types/types';
+import type { Login, Register } from '../types/auth.types';
 import { loginUser, registerUser } from '../api/authApi';
 import { constants } from '@shared/utils/constants';
 import { StorageTokenManager } from '../utils/storage';
@@ -64,7 +64,7 @@ export function useAuth(): UseAuthReturn {
         setIsLoading(false);
       }
     },
-    [setToken, clearMessages]
+    [setToken, clearMessages],
   );
 
   const register = useCallback(
@@ -94,7 +94,7 @@ export function useAuth(): UseAuthReturn {
         setIsLoading(false);
       }
     },
-    [login, clearMessages]
+    [login, clearMessages],
   );
 
   const logout = useCallback((): void => {

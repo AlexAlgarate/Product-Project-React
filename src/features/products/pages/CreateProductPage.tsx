@@ -6,7 +6,7 @@ import { Button } from '@shared/components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { Routes } from '@shared/utils/constants';
 
-import type { ProductDTO } from '../types/Product';
+import type { ProductDTO } from '../types/product.types';
 
 type newProduct = {
   name: string;
@@ -133,7 +133,7 @@ export const CreateProductForm: React.FC = () => {
   };
 
   const handleAddProduct = async (
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
 
@@ -162,7 +162,7 @@ export const CreateProductForm: React.FC = () => {
   };
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     const { value, name } = event.target;
     setProduct({

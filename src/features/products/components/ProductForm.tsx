@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import type { Product } from '@features/products/types/Product';
+import type { Product } from '@features/products/types/product.types';
 import { Card } from '@shared/components/ui/Card/Card';
 import { Button } from '@shared/components/ui';
 
@@ -110,7 +110,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ item, onClose }) => {
   };
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
     const { value, name } = event.target;
     setProduct({

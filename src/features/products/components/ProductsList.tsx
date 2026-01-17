@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 
-import type { Product } from '@features/products/types/Product';
+import type { Product } from '@features/products/types/product.types';
 import { Card } from '@shared/components/ui/Card/Card';
-import { ProductItem } from '../ProductItem/ProductItem';
-import { ProductForm } from '../ProductForm/ProductForm';
-import { useProducts } from '../../hooks/useProducts';
-import { Button } from '@shared/components/ui';
-import { Routes } from '@shared/utils/constants';
-import { EmptyProducts } from '../EmptyProducts/EmptyProducts';
+import { ProductItem } from './ProductItem';
+import { ProductForm } from './ProductForm';
+import { useProducts } from '../hooks/useProducts';
+import { EmptyProducts } from './EmptyProducts';
 
 export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -39,12 +37,10 @@ export const ProductsList: React.FC = () => {
       message = 'No autorizado. Por favor, inicia sesión.';
     }
     return (
-      <div className="products-wrapper">
-        <Card>
-          <h2 className="text-3xl text-red-500 font-extrabold">Error</h2>
-          <p>{message}</p>
-        </Card>
-      </div>
+      <Card className="p-6">
+        <h2 className="text-3xl text-red-500 font-extrabold">Error</h2>
+        <p className="mt-2">{message}</p>
+      </Card>
     );
   }
 
@@ -53,22 +49,35 @@ export const ProductsList: React.FC = () => {
   }
 
   return (
-    <div className="products-wrapper">
+    <div className="mx-auto max-w-7xl px-4 py-6">
       {showForm ? (
         <ProductForm item={activeProduct} onClose={handleCloseForm} />
       ) : (
-        <div>
-          <a href={Routes.newProduct}>
-            <Button variant="danger">Crea producto</Button>
-          </a>
-          <ul>
-            {products.map((item) => (
-              <li key={item.id}>
-                <ProductItem product={item} onEdit={handleEditForm} />
-              </li>
-            ))}
-          </ul>
-        </div>
+        <>
+          <div className="mb-4 flex items-center justify-between">
+            <h1 className="text-xl font-semibold text-white">Productos</h1>
+          </div>
+
+          <div>
+            <ul
+              className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            md:grid-cols-3
+            lg:grid-cols-3
+            xl:grid-cols-4
+            gap-4
+          "
+            >
+              {products.map((item) => (
+                <li key={item.id}>
+                  <ProductItem product={item} onEdit={handleEditForm} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useId, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { Login, ButtonState } from '../types/types';
+import type { Login, ButtonState } from '../types/auth.types';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
 import { InlineToast } from '../../../shared/components/feedback/InlineToast';
@@ -36,7 +36,7 @@ export const LoginPage: React.FC = () => {
         [name]: type === 'checkbox' ? checked : value,
       }));
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export const LoginPage: React.FC = () => {
         }, 1500);
       }
     },
-    [clearMessages, login, formData, navigate]
+    [clearMessages, login, formData, navigate],
   );
 
   const handleToastClose = useCallback(() => {

@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import repo from '@features/products/api/productsApi';
-import type { Product, ProductDTO } from '@features/products/types/Product';
-
+import type { Product, ProductDTO } from '@features/products/types/product.types';
 
 type UseProductReturn = {
   product: Product | null;
@@ -49,7 +48,7 @@ export const useProduct = (id: Product['id']): UseProductReturn => {
         throw err;
       }
     },
-    [id, product]
+    [id, product],
   );
 
   const deleteProduct = useCallback(async (): Promise<void> => {

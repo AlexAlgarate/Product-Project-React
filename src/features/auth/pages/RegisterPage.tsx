@@ -1,7 +1,7 @@
 import React, { useState, useId, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 
-import type { Register, ButtonState } from '../types/types';
+import type { Register, ButtonState } from '../types/auth.types';
 import { InlineToast } from '../../../shared/components/feedback/InlineToast';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
