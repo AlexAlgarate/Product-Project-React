@@ -6,6 +6,9 @@ import { ProductItem } from './ProductItem';
 import { ProductForm } from './ProductForm';
 import { useProducts } from '../hooks/useProducts';
 import { EmptyProducts } from './EmptyProducts';
+import { Routes } from '@shared/utils/constants';
+import { Button } from '@shared/components/ui';
+import { Plus } from 'lucide-react';
 
 export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -37,10 +40,14 @@ export const ProductsList: React.FC = () => {
       message = 'No autorizado. Por favor, inicia sesión.';
     }
     return (
-      <Card className="p-6">
-        <h2 className="text-3xl text-red-500 font-extrabold">Error</h2>
-        <p className="mt-2">{message}</p>
-      </Card>
+      <div className="flex min-h-[60vh] items-center justify-center px-4">
+        <Card className="max-w-md">
+          <div className="text-center">
+            <h2 className="mb-3 text-3xl text-red-500 font-extrabold">Error</h2>
+            <p className="mt-2 text-white/80">{message}</p>
+          </div>
+        </Card>
+      </div>
     );
   }
 
@@ -49,34 +56,36 @@ export const ProductsList: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6">
+    <div className="mx-auto max-w-7xl px-4 py-8">
       {showForm ? (
         <ProductForm item={activeProduct} onClose={handleCloseForm} />
       ) : (
         <>
-          <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-white">Productos</h1>
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white">Productos</h1>
+              <p className="mt-1 text-sm text-white/60">
+                {products.length} {products.length === 1 ? 'producto' : 'productos'}{' '}
+                disponibles
+              </p>
+            </div>
+
+            <a href={Routes.newProduct}>
+              <Button variant="primary" size="lg" className="flex items-center gap-2">
+                <Plus size={20} />
+                Nuevo Producto
+              </Button>
+            </a>
           </div>
 
-          <div>
-            <ul
-              className="
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-3
-            xl:grid-cols-4
-            gap-4
-          "
-            >
-              {products.map((item) => (
-                <li key={item.id}>
-                  <ProductItem product={item} onEdit={handleEditForm} />
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Grid de productos */}
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {products.map((item) => (
+              <li key={item.id} className="h-full">
+                <ProductItem product={item} onEdit={handleEditForm} />
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </div>
