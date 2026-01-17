@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { ProductsList } from '../components/ProductsList';
-import { ProductDetail } from '../components/ProductDetail';
+import { ProductDetail } from '../components/ProductDetail/ProductDetail';
 
 export const ProductsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
