@@ -1,6 +1,6 @@
 import { type RouteObject } from 'react-router';
 
-import { App } from '../../App';
+import { App } from '../App';
 import { NotFoundPage } from '@shared/pages/NotFoundPage';
 import { labelNavbarOptions, Routes } from '@shared/utils/constants';
 import { protectedLoader, rootIndexLoader } from './guards';
