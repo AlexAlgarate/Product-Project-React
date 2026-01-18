@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { Product } from '../types/product.types';
+import { useDebounce } from './useDebounce';
 
 export type ProductFilters = {
   searchTerm: string;
@@ -29,21 +30,25 @@ const initialFilters: ProductFilters = {
 export const useProductsFilters = (products: Product[]): UseProductsFiltersReturn => {
   const [filters, setFilters] = useState<ProductFilters>(initialFilters);
 
-  const setSearchTerm = (value: string): void => {
+  const debouncedFilters = useDebounce(filters, 300);
+
+  const setSearchTerm = useCallback((value: string): void => {
     setFilters((prev) => ({ ...prev, searchTerm: value }));
-  };
+  }, []);
 
-  const setSaleStatus = (value: ProductFilters['saleStatus']): void => {
+  const setSaleStatus = useCallback((value: ProductFilters['saleStatus']): void => {
     setFilters((prev) => ({ ...prev, saleStatus: value }));
-  };
+  }, []);
 
-  const setMinPrice = (value: string): void => {
+  const setMinPrice = useCallback((value: string): void => {
+    if (Number(value) < 0) return;
     setFilters((prev) => ({ ...prev, minPrice: value }));
-  };
+  }, []);
 
-  const setMaxPrice = (value: string): void => {
+  const setMaxPrice = useCallback((value: string): void => {
+    if (Number(value) < 0) return;
     setFilters((prev) => ({ ...prev, maxPrice: value }));
-  };
+  }, []);
 
   const resetFilters = (): void => {
     setFilters(initialFilters);
@@ -59,29 +64,33 @@ export const useProductsFilters = (products: Product[]): UseProductsFiltersRetur
   }, [filters]);
 
   const filteredProducts = useMemo(() => {
+    const currentFilters = debouncedFilters;
+
     return products.filter((product) => {
       // Filtro por nombre
       const matchesSearch =
-        filters.searchTerm === '' ||
-        product.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
+        currentFilters.searchTerm === '' ||
+        product.name.toLowerCase().includes(currentFilters.searchTerm.toLowerCase());
 
       // Filtro por estado de oferta
       const matchesSaleStatus =
-        filters.saleStatus === 'all' ||
-        (filters.saleStatus === 'on-sale' && product.isOnSale) ||
-        (filters.saleStatus === 'regular' && !product.isOnSale);
+        currentFilters.saleStatus === 'all' ||
+        (currentFilters.saleStatus === 'on-sale' && product.isOnSale) ||
+        (currentFilters.saleStatus === 'regular' && !product.isOnSale);
 
       // Filtro por precio mínimo
       const matchesMinPrice =
-        filters.minPrice === '' || product.price >= Number(filters.minPrice);
+        currentFilters.minPrice === '' ||
+        product.price >= Number(currentFilters.minPrice);
 
       // Filtro por precio máximo
       const matchesMaxPrice =
-        filters.maxPrice === '' || product.price <= Number(filters.maxPrice);
+        currentFilters.maxPrice === '' ||
+        product.price <= Number(currentFilters.maxPrice);
 
       return matchesSearch && matchesSaleStatus && matchesMinPrice && matchesMaxPrice;
     });
-  }, [products, filters]);
+  }, [products, debouncedFilters]);
 
   return {
     filters,
