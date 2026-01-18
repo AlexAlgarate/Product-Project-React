@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import type { Product } from '@features/products/types/product.types';
 import { Card } from '@shared/components/ui/Card/Card';
 import { Button } from '@shared/components/ui';
-import { ProductItem } from './ProductItem';
+import { ProductItem } from './ProductItem/ProductItem';
 import { ProductForm } from './ProductForm';
 import { useProducts } from '../hooks/useProducts';
 import { EmptyProducts } from './EmptyProducts';
