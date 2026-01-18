@@ -9,3 +9,12 @@ export type Product = {
 };
 
 export type ProductDTO = Omit<Product, 'id'>;
+
+export type ProductFormData = {
+  name: string;
+  price: string;
+  tags: string;
+  image: string;
+  description: string;
+  isOnSale: boolean;
+};
