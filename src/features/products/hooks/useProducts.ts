@@ -7,12 +7,14 @@ type UseProductType = {
   addProduct: (product: ProductDTO) => void;
   updateProduct: (product: Product) => void;
   error: Error | null;
+  isLoading: boolean;
 };
 
 export const useProducts = (): UseProductType => {
   const initialProducts: Product[] = [];
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [error, setError] = useState<Error | null>(null);
+  const [isloading, setIsLoading] = useState(true);
 
   const updateProduct = async (product: Product): Promise<void> => {
     const { id, ...productDTO } = product;
@@ -41,6 +43,7 @@ export const useProducts = (): UseProductType => {
 
   useEffect(() => {
     const loadProducts = async (): Promise<void> => {
+      setIsLoading(true);
       try {
         const data = await repo.getAllProducts();
         // Set del Error a null porque si ha ido bien, así no ocurre nada raro
@@ -48,6 +51,8 @@ export const useProducts = (): UseProductType => {
         setProducts(Array.isArray(data) ? data : [data]);
       } catch (error) {
         setError(error as Error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -59,5 +64,6 @@ export const useProducts = (): UseProductType => {
     error,
     addProduct,
     updateProduct,
+    isLoading: isloading,
   };
 };

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 
+import { Plus } from 'lucide-react';
+
 import type { Product } from '@features/products/types/product.types';
 import { Card } from '@shared/components/ui/Card/Card';
+import { Button } from '@shared/components/ui';
 import { ProductItem } from './ProductItem';
 import { ProductForm } from './ProductForm';
 import { useProducts } from '../hooks/useProducts';
 import { EmptyProducts } from './EmptyProducts';
 import { Routes } from '@shared/utils/constants';
-import { Button } from '@shared/components/ui';
-import { Plus } from 'lucide-react';
+import { LoadingProducts } from './LoadingProducts';
 
 export const ProductsList: React.FC = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
-  const { products, addProduct, updateProduct, error } = useProducts();
+  const { products, addProduct, updateProduct, error, isLoading } = useProducts();
 
   const handleEditForm = (product: Product): void => {
     setShowForm(true);
@@ -32,6 +34,10 @@ export const ProductsList: React.FC = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <LoadingProducts />;
+  }
 
   if (error) {
     let message = error.message;
