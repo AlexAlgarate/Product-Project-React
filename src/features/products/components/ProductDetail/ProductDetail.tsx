@@ -41,6 +41,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ id }) => {
   const handleSaveEdit = useCallback(
     async (updatedProduct: Product) => {
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { id, ...productDTO } = updatedProduct;
         await updateProduct(productDTO);
         setIsEditing(false);
