@@ -9,7 +9,7 @@ export type ProductFilters = {
   maxPrice: string;
 };
 
-type UseProductsFiltersReturn = {
+export type UseProductsFiltersReturn = {
   filters: ProductFilters;
   filteredProducts: Product[];
   setSearchTerm: (value: string) => void;
@@ -50,9 +50,9 @@ export const useProductsFilters = (products: Product[]): UseProductsFiltersRetur
     setFilters((prev) => ({ ...prev, maxPrice: value }));
   }, []);
 
-  const resetFilters = (): void => {
+  const resetFilters = useCallback((): void => {
     setFilters(initialFilters);
-  };
+  }, []);
 
   const hasActiveFilters = useMemo(() => {
     return (
@@ -67,23 +67,19 @@ export const useProductsFilters = (products: Product[]): UseProductsFiltersRetur
     const currentFilters = debouncedFilters;
 
     return products.filter((product) => {
-      // Filtro por nombre
       const matchesSearch =
         currentFilters.searchTerm === '' ||
         product.name.toLowerCase().includes(currentFilters.searchTerm.toLowerCase());
 
-      // Filtro por estado de oferta
       const matchesSaleStatus =
         currentFilters.saleStatus === 'all' ||
         (currentFilters.saleStatus === 'on-sale' && product.isOnSale) ||
         (currentFilters.saleStatus === 'regular' && !product.isOnSale);
 
-      // Filtro por precio mínimo
       const matchesMinPrice =
         currentFilters.minPrice === '' ||
         product.price >= Number(currentFilters.minPrice);
 
-      // Filtro por precio máximo
       const matchesMaxPrice =
         currentFilters.maxPrice === '' ||
         product.price <= Number(currentFilters.maxPrice);

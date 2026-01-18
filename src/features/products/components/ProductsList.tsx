@@ -1,12 +1,10 @@
-// src/features/products/components/ProductsList.tsx
-
 import React from 'react';
 import { Plus } from 'lucide-react';
 
 import { Card } from '@shared/components/ui/Card/Card';
 import { Button } from '@shared/components/ui';
 import { ProductItem } from './ProductItem/ProductItem';
-import { ProductsFilters } from './ProductsFilters';
+import { ProductsFilters } from './ProductFilters/ProductsFilters';
 import { useProducts } from '../hooks/useProducts';
 import { useProductsFilters } from '../hooks/useProductsFilters';
 import { EmptyProducts } from './EmptyProducts';
@@ -16,16 +14,7 @@ import { LoadingProducts } from './LoadingProducts';
 export const ProductsList: React.FC = () => {
   const { products, error, isLoading } = useProducts();
 
-  const {
-    filters,
-    filteredProducts,
-    setSearchTerm,
-    setSaleStatus,
-    setMinPrice,
-    setMaxPrice,
-    resetFilters,
-    hasActiveFilters,
-  } = useProductsFilters(products);
+  const filtersHook = useProductsFilters(products);
 
   if (isLoading) {
     return <LoadingProducts />;
@@ -59,6 +48,10 @@ export const ProductsList: React.FC = () => {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-white">Productos</h1>
+          <p className="mt-1 text-sm text-white/60">
+            {products.length} {products.length === 1 ? 'producto' : 'productos'} en
+            total
+          </p>
         </div>
 
         <a href={Routes.newProduct}>
@@ -69,18 +62,9 @@ export const ProductsList: React.FC = () => {
         </a>
       </div>
 
-      <ProductsFilters
-        filters={filters}
-        onSearchChange={setSearchTerm}
-        onSaleStatusChange={setSaleStatus}
-        onMinPriceChange={setMinPrice}
-        onMaxPriceChange={setMaxPrice}
-        onReset={resetFilters}
-        hasActiveFilters={hasActiveFilters}
-        resultsCount={filteredProducts.length}
-      />
+      <ProductsFilters filtersHook={filtersHook} />
 
-      {filteredProducts.length === 0 ? (
+      {filtersHook.filteredProducts.length === 0 ? (
         <div className="flex min-h-[40vh] items-center justify-center">
           <Card className="max-w-md text-center">
             <h3 className="mb-3 text-xl font-semibold text-white">
@@ -89,8 +73,12 @@ export const ProductsList: React.FC = () => {
             <p className="text-white/60">
               Intenta ajustar los filtros para ver más resultados
             </p>
-            {hasActiveFilters && (
-              <Button variant="primary" onClick={resetFilters} className="mt-4">
+            {filtersHook.hasActiveFilters && (
+              <Button
+                variant="primary"
+                onClick={filtersHook.resetFilters}
+                className="mt-4"
+              >
                 Limpiar filtros
               </Button>
             )}
@@ -98,7 +86,7 @@ export const ProductsList: React.FC = () => {
         </div>
       ) : (
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((item) => (
+          {filtersHook.filteredProducts.map((item) => (
             <li key={item.id} className="h-full">
               <ProductItem product={item} />
             </li>
