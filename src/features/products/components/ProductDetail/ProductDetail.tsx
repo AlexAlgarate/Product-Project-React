@@ -13,6 +13,7 @@ import { ProductTags } from './ProductTags';
 import { ProductDescription } from './ProductDescription';
 import { ProductStatus } from './ProductStatus';
 import { ProductActions } from './ProductActions';
+import { ProductEditForm } from './ProductEditForm';
 
 type ProductDetailProps = {
   readonly id: Product['id'];
@@ -21,12 +22,34 @@ type ProductDetailProps = {
 export const ProductDetail: React.FC<ProductDetailProps> = ({ id }) => {
   const navigate = useNavigate();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const { product, deleteProduct, isLoading } = useProduct(id);
+  const { product, deleteProduct, updateProduct, isLoading } = useProduct(id);
 
   const handleBack = useCallback(() => {
     navigate(Routes.products);
   }, [navigate]);
+
+  const handleEdit = useCallback(() => {
+    setIsEditing(true);
+  }, []);
+
+  const handleCancelEdit = useCallback(() => {
+    setIsEditing(false);
+  }, []);
+
+  const handleSaveEdit = useCallback(
+    async (updatedProduct: Product) => {
+      try {
+        const { id, ...productDTO } = updatedProduct;
+        await updateProduct(productDTO);
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Error updating product:', error);
+      }
+    },
+    [updateProduct],
+  );
 
   const handleConfirmDelete = useCallback(() => {
     if (!product) return;
@@ -63,6 +86,18 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ id }) => {
     return <NotFoundPage />;
   }
 
+  // Modo edición
+  if (isEditing) {
+    return (
+      <ProductEditForm
+        product={product}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
+      />
+    );
+  }
+
+  // Modo visualización
   return (
     <>
       {showDeleteConfirm && (
@@ -83,7 +118,11 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({ id }) => {
             <ProductTags tags={product.tags} />
             <ProductDescription description={product.description} />
             <ProductStatus isOnSale={product.isOnSale} />
-            <ProductActions onDelete={handleDeleteClick} onBack={handleBack} />
+            <ProductActions
+              onEdit={handleEdit}
+              onDelete={handleDeleteClick}
+              onBack={handleBack}
+            />
           </div>
         </div>
       </div>

@@ -10,23 +10,14 @@ import { ProductItemActions } from './ProductItemActions';
 
 type ProductItemProps = {
   readonly product: Product;
-  readonly onEdit: (product: Product) => void;
 };
 
-export const ProductItem: React.FC<ProductItemProps> = ({ product, onEdit }) => {
+export const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const navigate = useNavigate();
 
   const handleViewDetails = useCallback(() => {
     navigate(`/products/${product.id}`);
   }, [navigate, product.id]);
-
-  const handleEdit = useCallback(
-    (event: React.MouseEvent) => {
-      event.stopPropagation();
-      onEdit(product);
-    },
-    [onEdit, product],
-  );
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/10 bg-linear-to-b from-white/5 to-transparent shadow-lg transition-all duration-300 hover:border-indigo-500/30 hover:shadow-2xl hover:shadow-indigo-500/10">
@@ -40,7 +31,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product, onEdit }) => 
         <ProductItemTitle name={product.name} />
         <ProductItemTags tags={product.tags} maxTags={2} />
         <ProductItemPrice price={product.price} />
-        <ProductItemActions onViewDetails={handleViewDetails} onEdit={handleEdit} />
+        <ProductItemActions onViewDetails={handleViewDetails} />
       </div>
     </article>
   );
