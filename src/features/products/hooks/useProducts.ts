@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 
 type UseProductType = {
   products: Product[];
-  addProduct: (product: ProductDTO) => void;
-  updateProduct: (product: Product) => void;
+  addProduct: (product: ProductDTO) => Promise<Product>;
+  updateProduct: (product: Product) => Promise<void>;
   error: Error | null;
   isLoading: boolean;
 };
