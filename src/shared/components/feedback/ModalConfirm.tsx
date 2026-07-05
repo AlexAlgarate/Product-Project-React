@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { Button } from '@shared/components/ui';
+import { Button } from '@shared/components/ui/Button';
 
 type ModalProps = {
   readonly title?: string;
@@ -30,6 +30,6 @@ export const ConfirmModal: React.FC<ModalProps> = ({
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
 };

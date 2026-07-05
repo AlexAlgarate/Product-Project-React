@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Card, Button } from '@shared/components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { Routes } from '@shared/utils/constants';
-import { ProductFormFields, type ProductFormData } from '../components/ProductForm';
-import type { ProductDTO } from '../types/product.types';
+import type { ProductDTO, ProductFormData } from '../types/product.types';
 import { validateProductForm } from '../utils/validateFormData';
+import { Card } from '@shared/components/ui/Card';
+import { Button } from '@shared/components/ui/Button';
+import { ProductFormFields } from '../components/ProductForm/ProductForm';
 
 export const CreateProductPage: React.FC = () => {
   const [formData, setFormData] = useState<ProductFormData>({

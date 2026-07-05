@@ -6,7 +6,7 @@ import { ConfirmModal } from '@shared/components/feedback/ModalConfirm';
 import { useAuth } from '@features/auth/hooks/useAuth';
 
 import { cn } from '@shared/utils/cn';
-import { Button } from '../ui';
+import { Button } from '@shared/components/ui/Button';
 
 export type MenuOption = {
   path: string;
@@ -69,7 +69,7 @@ export const Navbar: React.FC<NavBarProps> = ({ options }) => {
                     'transition-all duration-300 ease-in-out',
                     'hover:text-white hover:bg-white/5',
                     isActive &&
-                      'text-white bg-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
+                      'text-white bg-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.1)]',
                   )
                 }
               >

@@ -2,10 +2,10 @@ import React, { useState, useId, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 
 import type { Register, ButtonState } from '../types/auth.types';
-import { InlineToast } from '../../../shared/components/feedback/InlineToast';
+import { InlineToast } from '@shared/components/feedback/InlineToast';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
-import { Input } from '../../../shared/components/ui/Input/Input';
+import { Input } from '@shared/components/ui/Input';
 import { SubmitButton } from '../components/SubmitButton';
 
 import { redirectTimeout, Routes } from '@shared/utils/constants';

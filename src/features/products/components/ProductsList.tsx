@@ -1,8 +1,7 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 
-import { Card } from '@shared/components/ui/Card/Card';
-import { Button } from '@shared/components/ui';
+import { Card } from '@shared/components/ui/Card';
 import { ProductItem } from './ProductItem/ProductItem';
 import { ProductsFilters } from './ProductFilters/ProductsFilters';
 import { useProducts } from '../hooks/useProducts';
@@ -10,6 +9,7 @@ import { useProductsFilters } from '../hooks/useProductsFilters';
 import { EmptyProducts } from './EmptyProducts';
 import { Routes } from '@shared/utils/constants';
 import { LoadingProducts } from './LoadingProducts';
+import { Button } from '@shared/components/ui/Button';
 
 export const ProductsList: React.FC = () => {
   const { products, error, isLoading } = useProducts();

@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormInput, Switch } from '@shared/components/ui';
+import { Switch } from '@shared/components/ui/Switch';
+import { FormInput } from '@shared/components/ui/FormInput';
 import type { ProductFormData } from '@features/products/types/product.types';
 
 type ProductFormFieldsProps = {

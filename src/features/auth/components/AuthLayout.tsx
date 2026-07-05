@@ -1,5 +1,5 @@
 import React, { type ReactNode } from 'react';
-import { Card } from '@shared/components/ui/Card/Card';
+import { Card } from '@shared/components/ui/Card';
 
 type AuthLayoutProps = {
   title: string;

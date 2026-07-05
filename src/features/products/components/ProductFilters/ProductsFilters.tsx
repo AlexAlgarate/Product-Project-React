@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search, X } from 'lucide-react';
-import { Button } from '@shared/components/ui';
+import { Button } from '@shared/components/ui/Button';
 import type { UseProductsFiltersReturn } from '../../hooks/useProductsFilters';
 import { FilterName } from './FilterName';
 import { FilterState } from './FilterState';

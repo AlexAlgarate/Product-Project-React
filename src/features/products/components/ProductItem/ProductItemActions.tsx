@@ -1,6 +1,6 @@
 import React from 'react';
 import { Eye } from 'lucide-react';
-import { Button } from '@shared/components/ui';
+import { Button } from '@shared/components/ui/Button';
 
 type ProductItemActionsProps = {
   readonly onViewDetails: () => void;

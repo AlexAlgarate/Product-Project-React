@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-import type { Product } from '@features/products/types/product.types';
-import { Card, Button } from '@shared/components/ui';
-import { ProductFormFields, type ProductFormData } from '../ProductForm';
+import type { Product, ProductFormData } from '@features/products/types/product.types';
+import { Button } from '@shared/components/ui/Button';
+import { Card } from '@shared/components/ui/Card';
 import { validateProductForm } from '@features/products/utils/validateFormData';
+import { ProductFormFields } from '../ProductForm/ProductForm';
 
 type ProductEditFormProps = {
   readonly product: Product;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Trash2, Pencil } from 'lucide-react';
-import { Button } from '@shared/components/ui';
+import { Button } from '@shared/components/ui/Button';
 
 type ProductActionsProps = {
   readonly onEdit: () => void;

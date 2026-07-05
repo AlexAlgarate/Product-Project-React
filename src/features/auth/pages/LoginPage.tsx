@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router';
 import type { Login, ButtonState } from '../types/auth.types';
 import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/AuthLayout';
-import { InlineToast } from '../../../shared/components/feedback/InlineToast';
+import { InlineToast } from '@shared/components/feedback/InlineToast';
 import { Routes } from '@shared/utils/constants';
-import { Input } from '../../../shared/components/ui/Input/Input';
+import { Input } from '@shared/components/ui/Input';
 import { SubmitButton } from '../components/SubmitButton';
 import { FooterAuth } from '../components/FooterAuth';
 

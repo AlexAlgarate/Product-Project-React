@@ -1,4 +1,5 @@
-import { Button, Card } from '@shared/components/ui';
+import { Button } from '@shared/components/ui/Button';
+import { Card } from '@shared/components/ui/Card';
 import { Routes } from '@shared/utils/constants';
 import React from 'react';
 
