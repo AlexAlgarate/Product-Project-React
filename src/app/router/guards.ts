@@ -4,10 +4,10 @@ import { redirect, type RouteObject } from 'react-router';
 const hasAuthToken = (): boolean =>
   Boolean(
     localStorage.getItem(constants.tokenKey) ??
-      sessionStorage.getItem(constants.tokenKey)
+    sessionStorage.getItem(constants.tokenKey),
   );
 
-export const redirectLogin = (): void => {
+const redirectLogin = (): void => {
   if (!hasAuthToken()) {
     throw redirect(Routes.login);
   }

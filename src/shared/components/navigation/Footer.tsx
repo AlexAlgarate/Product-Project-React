@@ -5,18 +5,20 @@ import linkedin from '@assets/linkedin.svg';
 import { cn } from '@shared/utils/cn';
 
 export const Footer: React.FC = () => {
+  const date = new Date().getFullYear();
+
   const socialLinkClass = cn(
     'flex grayscale opacity-60',
     'transition-all duration-300 ease-in-out',
     'hover:grayscale-0 hover:opacity-100',
-    'hover:-translate-y-[3px]'
+    'hover:-translate-y-[3px]',
   );
 
   return (
     <footer className="mt-auto py-8 px-4 border-t border-t-white/5 bg-[#121212]">
       <div className="max-w-275 mx-auto flex flex-col items-center gap-4 sm:flex sm:justify-between sm:flex-row">
-        <span className="text-gray-400 tracking-wide">
-          © {new Date().getFullYear()} — Developed by{' '}
+        <span suppressHydrationWarning className="text-gray-400 tracking-wide">
+          © {date} — Developed by{' '}
           <strong className="font-semibold text-white tracking-wider">
             Álex Algarate
           </strong>
